@@ -1517,93 +1517,6 @@ function initCaseStudyCharts(activeIndex) {
     });
 }
 
-/**=========================================
- * CTA Section Animations and Interactions
- =========================================*/
-function initCTASection() {
-    animateCounters();
-    initParallaxEffect();
-}
-
-/**================================
- * Counter Animation for Stats
- ================================*/
-function animateCounters() {
-    const counters = document.querySelectorAll('.counter');
-
-    // Checks if IntersectionObserver is available for better performance
-    if ('IntersectionObserver' in window) {
-        const options = {
-            threshold: 0.5 // Triggers when element is 50% visible
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const counter = entry.target;
-                    const target = parseInt(counter.getAttribute('data-target'));
-                    startCounting(counter, target);
-                    observer.unobserve(counter); // Only animate once
-                }
-            });
-        }, options);
-
-        counters.forEach(counter => {
-            observer.observe(counter);
-        });
-    } else {
-        // Fallback for browsers without IntersectionObserver
-        counters.forEach(counter => {
-            const target = parseInt(counter.getAttribute('data-target'));
-            startCounting(counter, target);
-        });
-    }
-
-    function startCounting(counter, target) {
-        let count = 0;
-        const duration = 2000; // 2 seconds
-        const frameDuration = 1000 / 60; // 60fps
-        const totalFrames = Math.round(duration / frameDuration);
-        const increment = target / totalFrames;
-
-        const timer = setInterval(() => {
-            count += increment;
-            if (count >= target) {
-                counter.textContent = target;
-                clearInterval(timer);
-            } else {
-                counter.textContent = Math.floor(count);
-            }
-        }, frameDuration);
-    }
-}
-
-/**=========================================
- * Parallax Effect for Floating Elements
- =========================================*/
-function initParallaxEffect() {
-    const floatingElements = document.querySelectorAll('.float__element');
-
-    // Only adds parallax if there are floating elements and on non-touch devices
-    if (floatingElements.length && window.matchMedia('(hover: hover)').matches) {
-        document.addEventListener('mousemove', (e) => {
-            const mouseX = e.clientX / window.innerWidth - 0.5;
-            const mouseY = e.clientY / window.innerHeight - 0.5;
-
-            floatingElements.forEach(element => {
-                // Creates different movement speeds for various elements
-                const depthX = parseFloat(element.getAttribute('data-depth-x') || 20);
-                const depthY = parseFloat(element.getAttribute('data-depth-y') || 20);
-
-                const translateX = mouseX * depthX;
-                const translateY = mouseY * depthY;
-
-                element.style.transform = `translate(${translateX}px, ${translateY}px)`;
-            });
-        });
-    }
-}
-
 /**==================================================================
  * Handles animations with GSAP/ScrollTrigger for targeted elements
  ==================================================================*/
@@ -1791,7 +1704,6 @@ function init() {
     initEcosystemScrollExperience();
     initEcosystemDiagram();
     initCaseStudiesSlider();
-    initCTASection();
     initScrollReveal();
 }
 

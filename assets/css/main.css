@@ -3013,43 +3013,6 @@ img {
     font-size: 0.875rem;
     color: var(--text-secondary);
 }
-
-.cta__stats {
-    width: 100%;
-    margin-top: 6rem;
-    padding-top: 3rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    animation: fade-in-up 0.8s 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-.stats__wrapper {
-    gap: 4rem;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.stat__item {
-    text-align: center;
-}
-
-.stat__value {
-    line-height: 1;
-    font-weight: 800;
-    font-size: 3.5rem;
-    color: transparent;
-    margin-bottom: 0.5rem;
-    background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    background-clip: text;
-}
-
-.stat__label {
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--text-secondary);
-}
-
 /**===================
  * KEYFRAMES STYLES
  ===================*/
