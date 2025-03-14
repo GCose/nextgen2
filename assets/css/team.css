@@ -1,0 +1,541 @@
+/**================
+ * HEADER OVERRIDES
+ ================*/
+.header {
+    background: transparent;
+}
+
+/**================
+ * TEAM SECTION
+ ================*/
+.team {
+    width: 100vw;
+    height: 100vh;
+    cursor: default;
+    overflow: hidden;
+    position: relative;
+    color: var(--light);
+}
+
+/**==================
+ * TEAM BACKGROUND
+ ==================*/
+.team__bg {
+    inset: 0;
+    z-index: 1;
+    position: absolute;
+}
+
+/**===============
+ * TEAM SLIDER
+ ===============*/
+.team__slider {
+    z-index: 2;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+}
+
+/**=================
+ * TEAM PROFILES
+ =================*/
+.team__profiles {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.team__profile {
+    top: 0;
+    left: 0;
+    z-index: 1;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.8s var(--ease), visibility 0.8s var(--ease);
+}
+
+.team__profile:first-child {
+    opacity: 1;
+    z-index: 2;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.team__profile-overlay {
+    inset: 0;
+    z-index: 2;
+    position: absolute;
+    background: linear-gradient(to right,
+            rgba(0, 0, 0, 0.85) 0%,
+            rgba(0, 0, 0, 0.449) 30%,
+            rgba(0, 0, 0, 0.322) 60%,
+            rgba(0, 0, 0, 0.2) 100%);
+}
+
+.team__profile-img {
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: relative;
+}
+
+.team__profile-img {
+    object-position: center 20% !important;
+}
+
+.team__profile-content {
+    left: 0;
+    top: 17%;
+    width: 60%;
+    z-index: 10;
+    padding: 0 5%;
+    color: white;
+    position: absolute;
+    box-sizing: border-box;
+    text-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
+}
+
+.team__profile-company {
+    font-weight: 600;
+    color: #ffffff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.team__profile-name {
+    margin: 0.2em 0;
+    font-weight: 800;
+    line-height: 1.2;
+    font-size: clamp(2.5rem, 5vw, 5rem);
+}
+
+.team__profile-position {
+    font-weight: 800;
+    line-height: 1.2;
+    margin: 0 0 0.7em;
+    font-size: clamp(1.8rem, 5vw, 3.5rem);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(0, 48, 255, 0.8));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: none;
+}
+
+.team__profile-bio {
+    line-height: 1.6;
+    max-width: 650px;
+    font-size: clamp(1rem, 1.5vw, 1.3rem);
+}
+
+/**====================
+ * TEAM CONTROLS
+ ====================*/
+.team__controls {
+    top: 50%;
+    right: 5%;
+    gap: 1rem;
+    z-index: 100;
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    transform: translateY(-50%);
+}
+
+.team__control {
+    width: 50px;
+    height: 50px;
+    border: none;
+    display: flex;
+    color: white;
+    cursor: pointer;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s var(--ease);
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.team__control svg {
+    width: 30px;
+    height: 30px;
+}
+
+.team__control:hover {
+    color: var(--dark);
+    background-color: white;
+}
+
+/* Pause button styles when active */
+.team__control--pause.paused {
+    background-color: var(--primary);
+}
+
+/* Play/pause icon styles */
+.pause-icon,
+.play-icon {
+    width: 18px;
+    height: 18px;
+    transition: opacity 0.3s var(--ease);
+}
+
+/**===================
+ * TEAM THUMBNAILS
+ ===================*/
+.team__thumbnails-wrapper {
+    left: 40%;
+    gap: 20px;
+    bottom: 20px;
+    z-index: 100;
+    display: flex;
+    position: absolute;
+    width: max-content;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+
+.team__thumbnails-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+.team__thumbnails {
+    gap: 20px;
+    display: flex;
+    padding: 0 50%;
+    width: max-content;
+    transform: translateX(-20%);
+}
+
+.team__thumbnail {
+    width: 150px;
+    height: 220px;
+    flex-shrink: 0;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+    border-radius: 20px;
+    transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+
+.team__thumbnail:hover {
+    transform: translateY(-5px);
+}
+
+.team__thumbnail-img {
+    width: 150px;
+    height: 220px;
+    object-fit: cover;
+    transition: transform 0.5s var(--ease);
+}
+
+.team__thumbnail:hover .team__thumbnail-img {
+    transform: scale(1.1);
+}
+
+/**=====================
+ * ANIMATION STYLES
+ =====================*/
+.team__profile .team__profile-bio,
+.team__profile .team__profile-name,
+.team__profile .team__profile-buttons,
+.team__profile .team__profile-company,
+.team__profile .team__profile-position,
+.team__profile.active .team__profile-bio,
+.team__profile.active .team__profile-name,
+.team__profile.active .team__profile-company,
+.team__profile.active .team__profile-position,
+.team__profile.active .team__profile-buttons {
+    opacity: 1;
+    transform: none;
+    transition: none;
+}
+
+/*========== Make first profile visible ==========*/
+.team__profiles .team__profile:nth-child(1) {
+    z-index: 1;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+/*========== Animation text in first item ==========*/
+.team__profiles .team__profile:nth-child(1) .team__profile-bio,
+.team__profiles .team__profile:nth-child(1) .team__profile-name,
+.team__profiles .team__profile:nth-child(1) .team__profile-company,
+.team__profiles .team__profile:nth-child(1) .team__profile-position,
+.team__profiles .team__profile:nth-child(1) .team__profile-buttons {
+    opacity: 0;
+    filter: blur(20px);
+    transform: translateY(50px);
+    animation: showContent 0.5s 1s linear 1 forwards;
+}
+
+@keyframes showContent {
+    to {
+        opacity: 1;
+        filter: blur(0px);
+        transform: translateY(0px);
+    }
+}
+
+/*========== Staggered delays for content animation ==========*/
+.team__profiles .team__profile:nth-child(1) .team__profile-name {
+    animation-delay: 1.2s !important;
+}
+
+.team__profiles .team__profile:nth-child(1) .team__profile-position {
+    animation-delay: 1.4s !important;
+}
+
+.team__profiles .team__profile:nth-child(1) .team__profile-bio {
+    animation-delay: 1.6s !important;
+}
+
+.team__profiles .team__profile:nth-child(1) .team__profile-buttons {
+    animation-delay: 1.8s !important;
+}
+
+/*========== Animation when next clicked ==========*/
+.team__slider.next .team__profiles .team__profile:nth-child(1) .team__profile-img {
+    left: 50%;
+    width: 150px;
+    bottom: 50px;
+    height: 220px;
+    position: absolute;
+    border-radius: 20px;
+    animation: showImage 0.5s linear 1 forwards;
+}
+
+@keyframes showImage {
+    to {
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+    }
+}
+
+/*========== Thumbnail animation for next ==========*/
+.team__slider.next .team__thumbnails .team__thumbnail:nth-last-child(1) {
+    overflow: hidden;
+    animation: showThumbnail 0.5s linear 1 forwards;
+}
+
+@keyframes showThumbnail {
+    from {
+        width: 0;
+        opacity: 0;
+    }
+}
+
+/*========== Thumbnail container animation for next ==========*/
+.team__slider.next .team__thumbnails {
+    animation: effectNext 0.5s linear 1 forwards;
+}
+
+@keyframes effectNext {
+    from {
+        transform: translateX(-20%) translateX(150px);
+    }
+
+    to {
+        transform: translateX(-20%);
+    }
+}
+
+/*========== Animation when prev is clicked ==========*/
+.team__slider.prev .team__profiles .team__profile:nth-child(2) {
+    z-index: 2;
+}
+
+.team__slider.prev .team__profiles .team__profile:nth-child(2) .team__profile-img {
+    left: 0;
+    bottom: 0;
+    position: absolute;
+    animation: outFrame 0.5s linear 1 forwards;
+}
+
+@keyframes outFrame {
+    to {
+        left: 50%;
+        bottom: 50px;
+        width: 150px;
+        height: 220px;
+        border-radius: 20px;
+    }
+}
+
+/*========== Thumbnail animation for prev ==========*/
+.team__slider.prev .team__thumbnails .team__thumbnail:nth-child(1) {
+    opacity: 0;
+    overflow: hidden;
+    animation: showThumbnail 0.5s linear 1 forwards;
+}
+
+/*========== Disables button interaction during animation ==========*/
+.team__slider.next .team__control,
+.team__slider.prev .team__control {
+    pointer-events: none;
+}
+
+/*========== Content animation for prev ==========*/
+.team__slider.prev .team__profiles .team__profile:nth-child(2) .team__profile-company,
+.team__slider.prev .team__profiles .team__profile:nth-child(2) .team__profile-name,
+.team__slider.prev .team__profiles .team__profile:nth-child(2) .team__profile-position,
+.team__slider.prev .team__profiles .team__profile:nth-child(2) .team__profile-bio,
+.team__slider.prev .team__profiles .team__profile:nth-child(2) .team__profile-buttons {
+    animation: contentOut 1.5s linear 1 forwards !important;
+}
+
+@keyframes contentOut {
+    to {
+        opacity: 0;
+        filter: blur(20px);
+        transform: translateY(-150px);
+    }
+}
+
+.team__profile {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.team__profile:nth-child(1),
+.team__profile:nth-child(2) {
+    visibility: visible;
+}
+
+/**====================
+ * RESPONSIVE STYLES
+ ====================*/
+@media screen and (max-width: 1200px) {
+    .team__profile-content {
+        top: 40%;
+        width: 70%;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .team__profile-content {
+        width: 80%;
+    }
+
+    .team__controls {
+        right: 3%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .team__profile-img {
+        object-position: center center;
+    }
+
+    .team__profile-overlay {
+        background: linear-gradient(to top,
+                rgba(15, 15, 15, 0.85) 0%,
+                rgba(0, 0, 0, 0.7) 30%,
+                rgba(0, 0, 0, 0.5) 60%,
+                rgba(0, 0, 0, 0.2) 100%);
+    }
+
+    .team__profile-content {
+        width: 100%;
+        text-align: center;
+    }
+
+    .team__profile-position {
+        font-size: 1.8rem;
+    }
+
+    .team__profile-bio {
+        margin: 0 auto;
+        max-height: 30vh;
+        overflow-y: auto;
+    }
+
+    .team__profile-buttons {
+        gap: 0.5rem;
+        width: 150px;
+        margin: 2rem auto 0;
+        flex-direction: column;
+    }
+
+    .team__controls {
+        top: auto;
+        right: 50%;
+        z-index: 150;
+        bottom: 120px;
+        flex-direction: row;
+        transform: translateX(50%);
+    }
+
+    .team__thumbnails-wrapper {
+        width: 100%;
+    }
+
+    .team__thumbnails {
+        padding: 0 20px;
+        transform: none;
+        justify-content: center;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .team__profile-content {
+        padding: 0 1rem;
+    }
+
+    .team__profile-company {
+        letter-spacing: 3px;
+    }
+
+    .team__profile-position {
+        margin-bottom: 0.5em;
+    }
+
+    .team__profile-bio {
+        max-height: 25vh;
+    }
+
+    .team__controls {
+        bottom: 100px;
+    }
+
+    .team__control {
+        width: 35px;
+        height: 35px;
+    }
+
+    .team__thumbnails-wrapper {
+        left: 60%;
+        bottom: 20px;
+    }
+
+    .team__thumbnail {
+        width: 100px;
+        height: 150px;
+    }
+
+    .team__thumbnail-img {
+        width: 100px;
+        height: 150px;
+    }
+}
+
+/**====================
+ * FOOTER OVERRIDES
+ ====================*/
+.footer {
+    cursor: default;
+}
+
+.footer a {
+    text-decoration: none;
+}
