@@ -881,7 +881,7 @@ function initValuesSection() {
  ===================================*/
 function initTeamImagePlaceholders() {
     // Get all member images
-    const memberImages = document.querySelectorAll('.member-img');
+    const memberImages = document.querySelectorAll('.member__img');
 
     // Function to handle image loading errors
     function handleImageError(img) {
@@ -936,8 +936,8 @@ function initTeamImagePlaceholders() {
  * Add to Team Section Animation
  ==============================*/
 function initTeamSection() {
-    const teamLeader = document.querySelector('.team-leader');
-    const teamMembers = document.querySelectorAll('.team-grid .team-member');
+    const teamLeader = document.querySelector('.team__leader');
+    const teamMembers = document.querySelectorAll('.team__grid .team__member');
 
     // Initialize placeholders for missing images
     initTeamImagePlaceholders();
@@ -948,8 +948,8 @@ function initTeamSection() {
     if (window.gsap) {
         // Team leader animation
         if (teamLeader) {
-            const portrait = teamLeader.querySelector('.team-member__portrait');
-            const info = teamLeader.querySelector('.team-member__info');
+            const portrait = teamLeader.querySelector('.team__member-portrait');
+            const info = teamLeader.querySelector('.team__member-info');
 
             if (portrait && info) {
                 gsap.set([portrait, info], { opacity: 0, y: 30 });
@@ -983,7 +983,7 @@ function initTeamSection() {
 
             gsap.timeline({
                 scrollTrigger: {
-                    trigger: '.team-grid',
+                    trigger: '.team__grid',
                     start: 'top 70%',
                     end: 'center center',
                     toggleActions: 'play none none reverse'
@@ -1000,8 +1000,8 @@ function initTeamSection() {
 
         // Enhanced hover effects for portrait images
         teamMembers.forEach(member => {
-            const portrait = member.querySelector('.team-member__portrait');
-            const image = member.querySelector('.member-img');
+            const portrait = member.querySelector('.team__member-portrait');
+            const image = member.querySelector('.member__img');
 
             if (portrait && image) {
                 member.addEventListener('mouseenter', () => {

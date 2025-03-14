@@ -1182,27 +1182,27 @@
 /**=====================
  * TEAM SECTION STYLES
  =====================*/
-.story-team {
+.story__team {
     padding: 6rem 0;
     overflow: hidden;
     position: relative;
     background-color: #0c1018;
 }
 
-.story-team__title {
+.story__team-title {
     color: white;
     text-align: center;
     margin-bottom: 4rem;
     font-size: clamp(2rem, 5vw, 3.5rem);
 }
 
-.story-team__wrapper {
+.story__team-wrapper {
     gap: 4rem;
     display: flex;
     flex-direction: column;
 }
 
-.team-leader {
+.team__leader {
     gap: 3rem;
     width: 100%;
     display: grid;
@@ -1217,27 +1217,27 @@
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.team-grid {
+.team__grid {
     gap: 2rem;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 }
 
-.team-member {
+.team__member {
     display: flex;
     text-align: center;
     align-items: center;
     flex-direction: column;
 }
 
-.team-member__portrait {
+.team__member-portrait {
     width: 150px;
     height: 150px;
     position: relative;
     margin-bottom: 1.5rem;
 }
 
-.portrait-outline {
+.portrait__outline {
     top: 0;
     left: 0;
     z-index: 1;
@@ -1249,7 +1249,7 @@
     animation: pulseOutline 3s infinite alternate ease-in-out;
 }
 
-.portrait-image {
+.portrait__image {
     top: 50%;
     left: 50%;
     width: 90%;
@@ -1262,7 +1262,7 @@
     background: linear-gradient(135deg, rgba(0, 85, 255, 0.2), rgba(0, 217, 255, 0.2));
 }
 
-.member-img {
+.member__img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -1270,46 +1270,46 @@
     transition: transform 0.5s ease;
 }
 
-.team-member:hover .member-img {
+.team__member:hover .member__img {
     transform: scale(1.1);
 }
 
-.team-leader .team-member__portrait {
+.team__leader .team__member-portrait {
     width: 200px;
     height: 200px;
     margin: 0 auto;
 }
 
-.team-member__info {
+.team__member-info {
     flex: 1;
 }
 
-.team-member__name {
+.team__member-name {
     color: white;
     font-weight: 700;
     font-size: 1.25rem;
     margin-bottom: 0.25rem;
 }
 
-.team-leader .team-member__name {
+.team__leader .team__member-name {
     font-size: 1.75rem;
 }
 
-.team-member__role {
+.team__member-role {
     font-weight: 600;
     font-size: 0.875rem;
     margin-bottom: 1.5rem;
     color: var(--primary-light);
 }
 
-.team-member__bio {
+.team__member-bio {
     font-size: 1rem;
     line-height: 1.7;
     color: var(--text-secondary);
 }
 
 /*========== Fall back gradient if image fails to load ==========*/
-.portrait-image::before {
+.portrait__image::before {
     top: 0;
     left: 0;
     z-index: 1;
@@ -1322,7 +1322,7 @@
     background: linear-gradient(135deg, rgba(0, 85, 255, 0.4), rgba(0, 217, 255, 0.4));
 }
 
-.team-member:hover .portrait-image::before {
+.team__member:hover .portrait__image::before {
     opacity: 0.5;
 }
 
@@ -1343,22 +1343,22 @@
  * BREAKPOINT STYLES
  ====================*/
 @media (max-width: 992px) {
-    .team-leader {
+    .team__leader {
         padding: 2rem;
         grid-template-columns: 1fr;
     }
 
-    .team-leader .team-member__portrait {
+    .team__leader .team__member-portrait {
         margin-bottom: 2rem;
     }
 }
 
 @media (max-width: 576px) {
-    .team-grid {
+    .team__grid {
         grid-template-columns: 1fr;
     }
 
-    .team-member {
+    .team__member {
         margin: 0 auto;
         max-width: 280px;
     }
