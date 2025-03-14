@@ -48,7 +48,7 @@ class TeamSlider {
      ========================================*/
     teamImageAdjuster() {
         // Lists of team members to adjust (indices starting from 0)
-        const targetIndices = [1, 2, 3, 5, 6, 10, 11, 15, 17, 18];
+        const targetIndices = [1, 2, 3, 5, 6, 7, 10, 11, 15, 17, 18];
 
         // Gets all team profile images
         const profileImages = document.querySelectorAll('.team__profile-img');
