@@ -1179,81 +1179,99 @@
     }
 }
 
-/* Team Section Styles - kept as is since you liked it */
+/**=====================
+ * TEAM SECTION STYLES
+ =====================*/
 .story-team {
-    position: relative;
     padding: 6rem 0;
-    background-color: #0c1018;
     overflow: hidden;
+    position: relative;
+    background-color: #0c1018;
 }
 
 .story-team__title {
-    font-size: clamp(2rem, 5vw, 3.5rem);
     color: white;
+    text-align: center;
     margin-bottom: 4rem;
+    font-size: clamp(2rem, 5vw, 3.5rem);
 }
 
 .story-team__wrapper {
+    gap: 4rem;
     display: flex;
     flex-direction: column;
-    gap: 4rem;
 }
 
 .team-leader {
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 250px 1fr;
     gap: 3rem;
+    width: 100%;
+    display: grid;
     padding: 3rem;
-    background-color: rgba(17, 24, 39, 0.8);
-    border-radius: var(--radius-lg);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    margin: 0 auto;
+    max-width: 800px;
     backdrop-filter: blur(10px);
+    border-radius: var(--radius-lg);
+    grid-template-columns: 250px 1fr;
+    background-color: rgba(17, 24, 39, 0.8);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .team-grid {
+    gap: 2rem;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 2rem;
 }
 
 .team-member {
     display: flex;
-    flex-direction: column;
-    align-items: center;
     text-align: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 .team-member__portrait {
-    position: relative;
     width: 150px;
     height: 150px;
+    position: relative;
     margin-bottom: 1.5rem;
 }
 
 .portrait-outline {
-    position: absolute;
     top: 0;
     left: 0;
+    z-index: 1;
     width: 100%;
     height: 100%;
     border-radius: 50%;
+    position: absolute;
     border: 2px solid var(--primary-color);
     animation: pulseOutline 3s infinite alternate ease-in-out;
 }
 
 .portrait-image {
-    position: absolute;
     top: 50%;
     left: 50%;
     width: 90%;
     height: 90%;
+    z-index: 0;
+    overflow: hidden;
+    position: absolute;
     border-radius: 50%;
     transform: translate(-50%, -50%);
     background: linear-gradient(135deg, rgba(0, 85, 255, 0.2), rgba(0, 217, 255, 0.2));
+}
+
+.member-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    transition: transform 0.5s ease;
+}
+
+.team-member:hover .member-img {
+    transform: scale(1.1);
 }
 
 .team-leader .team-member__portrait {
@@ -1267,9 +1285,9 @@
 }
 
 .team-member__name {
-    font-size: 1.25rem;
     color: white;
     font-weight: 700;
+    font-size: 1.25rem;
     margin-bottom: 0.25rem;
 }
 
@@ -1278,10 +1296,10 @@
 }
 
 .team-member__role {
-    font-size: 0.875rem;
-    color: var(--primary-light);
     font-weight: 600;
+    font-size: 0.875rem;
     margin-bottom: 1.5rem;
+    color: var(--primary-light);
 }
 
 .team-member__bio {
@@ -1290,6 +1308,27 @@
     color: var(--text-secondary);
 }
 
+/*========== Fall back gradient if image fails to load ==========*/
+.portrait-image::before {
+    top: 0;
+    left: 0;
+    z-index: 1;
+    content: '';
+    width: 100%;
+    height: 100%;
+    opacity: 0.3;
+    position: absolute;
+    transition: opacity 0.3s ease;
+    background: linear-gradient(135deg, rgba(0, 85, 255, 0.4), rgba(0, 217, 255, 0.4));
+}
+
+.team-member:hover .portrait-image::before {
+    opacity: 0.5;
+}
+
+/**====================
+ * KEYFRAMES STYLES
+ ====================*/
 @keyframes pulseOutline {
     0% {
         box-shadow: 0 0 0 0 rgba(0, 85, 255, 0.4);
@@ -1308,10 +1347,19 @@
         padding: 2rem;
         grid-template-columns: 1fr;
     }
+
+    .team-leader .team-member__portrait {
+        margin-bottom: 2rem;
+    }
 }
 
 @media (max-width: 576px) {
     .team-grid {
         grid-template-columns: 1fr;
+    }
+
+    .team-member {
+        margin: 0 auto;
+        max-width: 280px;
     }
 }

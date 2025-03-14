@@ -876,12 +876,71 @@ function initValuesSection() {
     }
 }
 
-/**=======================
- * Team Section Animation
- =======================*/
+/**===================================
+ * Team Image Placeholder Function
+ ===================================*/
+function initTeamImagePlaceholders() {
+    // Get all member images
+    const memberImages = document.querySelectorAll('.member-img');
+
+    // Function to handle image loading errors
+    function handleImageError(img) {
+        // Create canvas for placeholder
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+
+        // Set canvas dimensions
+        canvas.width = 200;
+        canvas.height = 200;
+
+        // Get member name from alt attribute
+        const name = img.alt || 'Team Member';
+        const initials = name.split(' ').map(n => n[0]).join('');
+
+        // Generate a unique color based on name
+        const hue = name.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) % 360;
+
+        // Create gradient background
+        const gradient = ctx.createLinearGradient(0, 0, 200, 200);
+        gradient.addColorStop(0, `hsla(${hue}, 70%, 30%, 1)`);
+        gradient.addColorStop(1, `hsla(${hue + 60}, 70%, 40%, 1)`);
+
+        // Fill background
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, 200, 200);
+
+        // Add initials
+        ctx.fillStyle = 'white';
+        ctx.font = 'bold 72px Poppins, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(initials, 100, 100);
+
+        // Replace image src with canvas data URL
+        img.src = canvas.toDataURL('image/png');
+    }
+
+    // Add error handler to each image
+    memberImages.forEach(img => {
+        // Try to load from src
+        img.addEventListener('error', () => handleImageError(img));
+
+        // If src is empty or undefined, generate placeholder immediately
+        if (!img.src || img.src === window.location.href) {
+            handleImageError(img);
+        }
+    });
+}
+
+/**==============================
+ * Add to Team Section Animation
+ ==============================*/
 function initTeamSection() {
     const teamLeader = document.querySelector('.team-leader');
     const teamMembers = document.querySelectorAll('.team-grid .team-member');
+
+    // Initialize placeholders for missing images
+    initTeamImagePlaceholders();
 
     if (!teamLeader && !teamMembers.length) return;
 
@@ -939,14 +998,21 @@ function initTeamSection() {
                 });
         }
 
-        // Hover effects
+        // Enhanced hover effects for portrait images
         teamMembers.forEach(member => {
             const portrait = member.querySelector('.team-member__portrait');
+            const image = member.querySelector('.member-img');
 
-            if (portrait) {
+            if (portrait && image) {
                 member.addEventListener('mouseenter', () => {
                     gsap.to(portrait, {
                         y: -10,
+                        duration: 0.4,
+                        ease: "power2.out"
+                    });
+
+                    gsap.to(image, {
+                        scale: 1.1,
                         duration: 0.4,
                         ease: "power2.out"
                     });
@@ -955,6 +1021,12 @@ function initTeamSection() {
                 member.addEventListener('mouseleave', () => {
                     gsap.to(portrait, {
                         y: 0,
+                        duration: 0.4,
+                        ease: "power2.out"
+                    });
+
+                    gsap.to(image, {
+                        scale: 1,
                         duration: 0.4,
                         ease: "power2.out"
                     });
@@ -1016,6 +1088,7 @@ function initAboutPage() {
     initMissionVisionSection();
     initDifferenceSection();
     initValuesSection();
+    initTeamImagePlaceholders();
     initTeamSection();
     initScrollAnimations();
 }
