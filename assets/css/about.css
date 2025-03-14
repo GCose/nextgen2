@@ -663,9 +663,9 @@
 .difference__bg {
     top: 0;
     left: 0;
-    z-index: 0;
     width: 100%;
     height: 100%;
+    z-index: 0;
     position: absolute;
     background-image:
         radial-gradient(circle at 20% 30%, var(--blue-100), transparent 40%),
@@ -680,36 +680,37 @@
 }
 
 .section__subtitle {
-    margin: 0 auto;
     max-width: 600px;
+    margin: 0 auto;
     color: var(--text-secondary);
     font-size: clamp(1rem, 2vw, 1.2rem);
 }
 
 .difference__blocks {
     z-index: 1;
-    gap: 8rem;
-    display: flex;
     position: relative;
+    display: flex;
     flex-direction: column;
+    gap: 8rem;
 }
 
 .difference__block {
-    gap: 4rem;
-    opacity: 0;
     display: grid;
-    align-items: center;
-    transform: translateY(30px);
     grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    opacity: 0;
+    transform: translateY(30px);
 }
 
 .difference__block--reverse {
-    direction: rtl;
     grid-template-columns: 1fr 1fr;
+    direction: rtl;
 }
 
 .difference__block--reverse .difference__block-content {
     direction: ltr;
+    /* Reset text direction */
 }
 
 .difference__block-content {
@@ -720,51 +721,51 @@
 
 .difference__block-title {
     color: white;
-    font-weight: 700;
-    position: relative;
-    margin-bottom: 1.5rem;
     font-size: clamp(1.8rem, 3vw, 2.5rem);
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    position: relative;
 }
 
 .difference__block-title::after {
-    left: 0;
     content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
     width: 60px;
     height: 3px;
-    bottom: -10px;
     border-radius: 3px;
-    position: absolute;
     background: var(--gradient-primary);
 }
 
 .difference__block-description {
-    line-height: 1.8;
-    margin-bottom: 2rem;
     color: var(--text-secondary);
     font-size: clamp(1rem, 2vw, 1.2rem);
+    line-height: 1.8;
+    margin-bottom: 2rem;
 }
 
 .difference__block-cta {
-    gap: 0.5rem;
-    font-size: 1rem;
-    font-weight: 600;
-    position: relative;
-    align-items: center;
-    display: inline-flex;
     align-self: flex-start;
-    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
     color: var(--primary-light);
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    position: relative;
 }
 
 .difference__block-cta::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
     left: 0;
     width: 0;
     height: 2px;
-    content: '';
-    bottom: -5px;
-    position: absolute;
-    transition: width 0.3s ease;
     background: var(--gradient-primary);
+    transition: width 0.3s ease;
 }
 
 .difference__block-cta:hover {
@@ -786,12 +787,12 @@
 }
 
 .difference__block-image {
-    height: 100%;
-    overflow: hidden;
-    aspect-ratio: 4/3;
     position: relative;
-    box-shadow: var(--card-shadow);
     border-radius: var(--radius-lg);
+    overflow: hidden;
+    height: 100%;
+    aspect-ratio: 4/3;
+    box-shadow: var(--card-shadow);
 }
 
 .difference__image {
@@ -803,6 +804,57 @@
 
 .difference__block:hover .difference__image {
     transform: scale(1.05);
+}
+
+/* Image overlay effect */
+.difference__block-image::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(0, 85, 255, 0.4), rgba(0, 217, 255, 0.2));
+    z-index: 1;
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+}
+
+.difference__block:hover .difference__block-image::before {
+    opacity: 0.4;
+}
+
+/* Image placeholder for failed loads */
+.difference__block-image::after {
+    content: attr(data-alt);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    text-align: center;
+    padding: 2rem;
+    opacity: 0;
+    background: linear-gradient(135deg, var(--blue-200), var(--cyan-200));
+    z-index: 0;
+}
+
+.difference__image:not([src]),
+.difference__image[src=""],
+.difference__image.error {
+    opacity: 0;
+}
+
+.difference__image:not([src])+.difference__block-image::after,
+.difference__image[src=""]+.difference__block-image::after,
+.difference__image.error+.difference__block-image::after {
+    opacity: 1;
+    z-index: 2;
 }
 
 /**====================
