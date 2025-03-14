@@ -438,388 +438,129 @@ function initMissionVisionSection() {
  * Difference Section Animation
  =============================*/
 function initDifferenceSection() {
-    const tabs = document.querySelectorAll('.difference__tab');
-    const panels = document.querySelectorAll('.difference__tab-panel');
+    const differenceBlocks = document.querySelectorAll('.difference__block');
+    if (!differenceBlocks.length) return;
 
-    if (!tabs.length || !panels.length) return;
+    // Add image error handling
+    initImageErrorHandling();
 
-    // Initialize tab functionality
-    tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            const tabId = tab.getAttribute('data-tab');
-            const targetPanel = document.getElementById(tabId);
+    // Animate blocks on scroll with GSAP if available
+    if (window.gsap && window.ScrollTrigger) {
+        // Animate each block when it scrolls into view
+        differenceBlocks.forEach((block, index) => {
+            // Calculate stagger delay based on block index
+            const delay = index * 0.1;
 
-            // Update active tab
-            tabs.forEach(t => t.classList.remove('active'));
-            tab.classList.add('active');
+            // Determine animation direction based on whether it's a reverse block
+            const isReverse = block.classList.contains('difference__block--reverse');
+            const xOffset = isReverse ? -50 : 50;
 
-            // Update active panel
-            panels.forEach(p => p.classList.remove('active'));
-            targetPanel.classList.add('active');
-
-            // Initialize the specific visual for this tab
-            initTabVisual(tabId);
-        });
-    });
-
-    // Initialize AI visual
-    function initAIVisual() {
-        const aiVisual = document.querySelector('.ai-visual');
-        if (!aiVisual) return;
-
-        // Clear existing nodes
-        const existingNodes = aiVisual.querySelectorAll('.ai-node:not(.ai-node--center)');
-        existingNodes.forEach(node => node.remove());
-
-        // Create nodes
-        for (let i = 0; i < 20; i++) {
-            const node = document.createElement('div');
-            node.classList.add('ai-node');
-
-            // Random size
-            const size = Math.random() * 10 + 5;
-            node.style.width = `${size}px`;
-            node.style.height = `${size}px`;
-
-            // Random position
-            const angle = Math.random() * Math.PI * 2;
-            const distance = Math.random() * 120 + 40;
-            const x = 50 + Math.cos(angle) * distance;
-            const y = 50 + Math.sin(angle) * distance;
-
-            node.style.left = `${x}%`;
-            node.style.top = `${y}%`;
-            node.style.opacity = '0';
-            node.style.transform = 'scale(0)';
-
-            aiVisual.appendChild(node);
-        }
-
-        // Create canvas for connections
-        const connectionsContainer = aiVisual.querySelector('.ai-connections');
-        if (connectionsContainer) {
-            const canvas = document.createElement('canvas');
-            canvas.width = connectionsContainer.offsetWidth;
-            canvas.height = connectionsContainer.offsetHeight;
-            connectionsContainer.appendChild(canvas);
-
-            const ctx = canvas.getContext('2d');
-
-            function drawConnections() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-                // Get center position
-                const center = aiVisual.querySelector('.ai-node--center');
-                if (!center) return;
-
-                const centerRect = center.getBoundingClientRect();
-                const containerRect = connectionsContainer.getBoundingClientRect();
-
-                const centerX = centerRect.left + centerRect.width / 2 - containerRect.left;
-                const centerY = centerRect.top + centerRect.height / 2 - containerRect.top;
-
-                // Get nodes
-                const nodes = aiVisual.querySelectorAll('.ai-node:not(.ai-node--center)');
-
-                // Draw connections
-                nodes.forEach(node => {
-                    if (window.getComputedStyle(node).opacity > 0.1) {
-                        const nodeRect = node.getBoundingClientRect();
-                        const nodeX = nodeRect.left + nodeRect.width / 2 - containerRect.left;
-                        const nodeY = nodeRect.top + nodeRect.height / 2 - containerRect.top;
-
-                        // Create gradient
-                        const gradient = ctx.createLinearGradient(centerX, centerY, nodeX, nodeY);
-                        gradient.addColorStop(0, 'rgba(0, 85, 255, 0.6)');
-                        gradient.addColorStop(1, 'rgba(0, 85, 255, 0.1)');
-
-                        // Draw line
-                        ctx.beginPath();
-                        ctx.moveTo(centerX, centerY);
-                        ctx.lineTo(nodeX, nodeY);
-                        ctx.strokeStyle = gradient;
-                        ctx.lineWidth = 1;
-                        ctx.stroke();
-                    }
-                });
-            }
-
-            // Animate with GSAP
-            if (window.gsap) {
-                const nodes = aiVisual.querySelectorAll('.ai-node:not(.ai-node--center)');
-                const center = aiVisual.querySelector('.ai-node--center');
-
-                gsap.set(center, { opacity: 0, scale: 0 });
-
-                gsap.to(center, {
-                    opacity: 1,
-                    scale: 1,
-                    duration: 0.8,
-                    ease: "elastic.out(1, 0.7)",
-                    onComplete: () => {
-                        gsap.to(nodes, {
-                            opacity: 0.7,
-                            scale: 1,
-                            stagger: 0.03,
-                            duration: 0.4,
-                            ease: "power2.out",
-                            onUpdate: drawConnections
-                        });
-                    }
-                });
-
-                // Pulse animation for center node
-                gsap.to(center, {
-                    boxShadow: '0 0 30px rgba(0, 85, 255, 0.7)',
-                    repeat: -1,
-                    yoyo: true,
-                    duration: 1.5
-                });
-            }
-
-            // Handle window resize
-            window.addEventListener('resize', () => {
-                canvas.width = connectionsContainer.offsetWidth;
-                canvas.height = connectionsContainer.offsetHeight;
-                drawConnections();
-            });
-        }
-    }
-
-    // Initialize Ecosystem visual
-    function initEcosystemVisual() {
-        const ecosystemVisual = document.querySelector('.ecosystem-visual');
-        if (!ecosystemVisual) return;
-
-        // Create nodes
-        const connectionsContainer = ecosystemVisual.querySelector('.ecosystem-connections');
-        if (!connectionsContainer) return;
-
-        // Create orbits
-        for (let i = 0; i < 3; i++) {
-            const orbit = document.createElement('div');
-            orbit.classList.add('ecosystem-orbit');
-            orbit.style.position = 'absolute';
-            orbit.style.top = '50%';
-            orbit.style.left = '50%';
-            orbit.style.width = `${(i + 1) * 70 + 50}px`;
-            orbit.style.height = `${(i + 1) * 70 + 50}px`;
-            orbit.style.borderRadius = '50%';
-            orbit.style.border = '1px dashed rgba(0, 85, 255, 0.2)';
-            orbit.style.transform = 'translate(-50%, -50%)';
-            orbit.style.opacity = '0';
-
-            connectionsContainer.appendChild(orbit);
-        }
-
-        // Create nodes on orbits
-        for (let i = 0; i < 6; i++) {
-            const node = document.createElement('div');
-            node.classList.add('ecosystem-node');
-            node.style.position = 'absolute';
-            node.style.width = '12px';
-            node.style.height = '12px';
-            node.style.borderRadius = '50%';
-            node.style.backgroundColor = 'rgba(0, 217, 255, 0.8)';
-
-            // Position around different orbits
-            const angle = (i / 6) * Math.PI * 2;
-            const orbitRadius = 80 + (i % 3) * 50;
-            node.style.top = `calc(50% + ${Math.sin(angle) * orbitRadius}px)`;
-            node.style.left = `calc(50% + ${Math.cos(angle) * orbitRadius}px)`;
-            node.style.transform = 'translate(-50%, -50%)';
-            node.style.opacity = '0';
-
-            connectionsContainer.appendChild(node);
-        }
-
-        // Create canvas for connections
-        const canvas = document.createElement('canvas');
-        canvas.width = connectionsContainer.offsetWidth;
-        canvas.height = connectionsContainer.offsetHeight;
-        connectionsContainer.appendChild(canvas);
-
-        const ctx = canvas.getContext('2d');
-
-        function drawConnections() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            const core = ecosystemVisual.querySelector('.ecosystem-core');
-            if (!core) return;
-
-            const coreRect = core.getBoundingClientRect();
-            const containerRect = connectionsContainer.getBoundingClientRect();
-
-            const coreX = coreRect.left + coreRect.width / 2 - containerRect.left;
-            const coreY = coreRect.top + coreRect.height / 2 - containerRect.top;
-
-            // Get nodes
-            const nodes = connectionsContainer.querySelectorAll('.ecosystem-node');
-
-            // Draw connections
-            nodes.forEach(node => {
-                if (window.getComputedStyle(node).opacity > 0.1) {
-                    const nodeRect = node.getBoundingClientRect();
-                    const nodeX = nodeRect.left + nodeRect.width / 2 - containerRect.left;
-                    const nodeY = nodeRect.top + nodeRect.height / 2 - containerRect.top;
-
-                    // Create gradient
-                    const gradient = ctx.createLinearGradient(coreX, coreY, nodeX, nodeY);
-                    gradient.addColorStop(0, 'rgba(0, 217, 255, 0.6)');
-                    gradient.addColorStop(1, 'rgba(0, 217, 255, 0.1)');
-
-                    // Draw line
-                    ctx.beginPath();
-                    ctx.moveTo(coreX, coreY);
-                    ctx.lineTo(nodeX, nodeY);
-                    ctx.strokeStyle = gradient;
-                    ctx.lineWidth = 1;
-                    ctx.stroke();
-                }
-            });
-        }
-
-        // Animate with GSAP
-        if (window.gsap) {
-            const core = ecosystemVisual.querySelector('.ecosystem-core');
-            const orbits = connectionsContainer.querySelectorAll('.ecosystem-orbit');
-            const nodes = connectionsContainer.querySelectorAll('.ecosystem-node');
-
-            gsap.set(core, { opacity: 0, scale: 0 });
-
-            gsap.to(core, {
-                opacity: 1,
-                scale: 1,
-                duration: 0.8,
-                ease: "elastic.out(1, 0.7)",
-                onComplete: () => {
-                    gsap.to(orbits, {
-                        opacity: 0.7,
-                        stagger: 0.15,
-                        duration: 0.6
-                    });
-
-                    gsap.to(nodes, {
-                        opacity: 0.8,
-                        stagger: 0.1,
-                        duration: 0.6,
-                        onUpdate: drawConnections
-                    });
-                }
+            // Set initial state
+            gsap.set(block, {
+                opacity: 0,
+                y: 30,
             });
 
-            // Rotate orbits
-            orbits.forEach((orbit, index) => {
-                gsap.to(orbit, {
-                    rotation: 360,
-                    transformOrigin: 'center center',
-                    repeat: -1,
-                    duration: 20 + index * 10,
-                    ease: "none"
-                });
-            });
-        }
+            // Create content and image elements
+            const content = block.querySelector('.difference__block-content');
+            const image = block.querySelector('.difference__block-image');
 
-        // Handle window resize
-        window.addEventListener('resize', () => {
-            canvas.width = connectionsContainer.offsetWidth;
-            canvas.height = connectionsContainer.offsetHeight;
-            drawConnections();
-        });
-    }
+            if (!content || !image) return;
 
-    // Initialize Growth visual
-    function initGrowthVisual() {
-        const growthVisual = document.querySelector('.growth-visual');
-        if (!growthVisual) return;
+            // Set initial state for content and image
+            gsap.set(content, { x: isReverse ? 50 : -50, opacity: 0 });
+            gsap.set(image, { x: isReverse ? -50 : 50, opacity: 0 });
 
-        const chart = growthVisual.querySelector('.growth-chart');
-        const bar = chart?.querySelector('.growth-chart__bar');
-        const line = chart?.querySelector('.growth-chart__line');
-
-        if (!chart || !bar || !line) return;
-
-        // Animate with GSAP
-        if (window.gsap) {
-            gsap.set(bar, { width: 0 });
-            gsap.set(line, { clipPath: 'polygon(0 0, 0 0, 0 100%, 0% 100%)' });
-
-            gsap.to(bar, {
-                width: '80%',
-                duration: 1.5,
-                ease: "power3.out"
-            });
-
-            gsap.to(line, {
-                clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)',
-                duration: 1.5,
-                ease: "power3.out"
-            });
-        }
-    }
-
-    // Initialize Innovation visual
-    function initInnovationVisual() {
-        const innovationVisual = document.querySelector('.innovation-visual');
-        if (!innovationVisual) return;
-
-        const cycle = innovationVisual.querySelector('.innovation-cycle');
-        const segments = cycle?.querySelectorAll('.cycle-segment');
-        const center = cycle?.querySelector('.cycle-center');
-
-        if (!cycle || !segments.length || !center) return;
-
-        // Animate with GSAP
-        if (window.gsap) {
-            gsap.set(segments, { opacity: 0, scale: 0.8 });
-            gsap.set(center, { opacity: 0, scale: 0 });
-
-            gsap.to(center, {
-                opacity: 1,
-                scale: 1,
-                duration: 0.8,
-                ease: "elastic.out(1, 0.7)",
-                onComplete: () => {
-                    gsap.to(segments, {
+            // Create scroll trigger animation
+            ScrollTrigger.create({
+                trigger: block,
+                start: 'top 75%',
+                once: false, // Animate every time it scrolls into view
+                toggleActions: 'play none none reverse',
+                onEnter: () => {
+                    // Animate block container
+                    gsap.to(block, {
                         opacity: 1,
-                        scale: 1,
-                        stagger: 0.15,
-                        duration: 0.6,
-                        ease: "back.out(1.7)"
+                        y: 0,
+                        duration: 0.8,
+                        ease: 'power3.out',
+                        delay: delay
+                    });
+
+                    // Animate content
+                    gsap.to(content, {
+                        x: 0,
+                        opacity: 1,
+                        duration: 1,
+                        ease: 'power3.out',
+                        delay: delay + 0.2
+                    });
+
+                    // Animate image
+                    gsap.to(image, {
+                        x: 0,
+                        opacity: 1,
+                        duration: 1,
+                        ease: 'power3.out',
+                        delay: delay + 0.4
                     });
                 }
             });
+        });
 
-            // Pulse animation for center
-            gsap.to(center, {
-                boxShadow: '0 0 25px rgba(0, 85, 255, 0.6)',
-                repeat: -1,
-                yoyo: true,
-                duration: 1.5
+        // Create a parallax effect for images
+        differenceBlocks.forEach(block => {
+            const image = block.querySelector('.difference__image');
+            if (!image) return;
+
+            gsap.to(image, {
+                y: -30,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: block,
+                    start: 'top bottom',
+                    end: 'bottom top',
+                    scrub: true
+                }
             });
-        }
+        });
+    } else {
+        // Fallback for when GSAP is not available
+        differenceBlocks.forEach(block => {
+            block.style.opacity = 1;
+            block.style.transform = 'none';
+        });
     }
+}
 
-    // Initialize the visual for a specific tab
-    function initTabVisual(tabId) {
-        switch (tabId) {
-            case 'tab-1':
-                initAIVisual();
-                break;
-            case 'tab-2':
-                initEcosystemVisual();
-                break;
-            case 'tab-3':
-                initGrowthVisual();
-                break;
-            case 'tab-4':
-                initInnovationVisual();
-                break;
+/**============================
+ * Image Error Handling
+ ============================*/
+function initImageErrorHandling() {
+    const images = document.querySelectorAll('.difference__image');
+
+    images.forEach(img => {
+        // Handle image load errors
+        img.addEventListener('error', () => {
+            img.classList.add('error');
+            const imageContainer = img.closest('.difference__block-image');
+
+            if (imageContainer) {
+                // Get alt text to display as fallback
+                imageContainer.setAttribute('data-alt', img.alt || 'Image Unavailable');
+            }
+        });
+
+        // Check if src is empty or undefined
+        if (!img.src || img.src === window.location.href) {
+            img.classList.add('error');
+            const imageContainer = img.closest('.difference__block-image');
+
+            if (imageContainer) {
+                imageContainer.setAttribute('data-alt', img.alt || 'Image Unavailable');
+            }
         }
-    }
-
-    // Initialize first tab
-    initTabVisual('tab-1');
+    });
 }
 
 /**=======================
@@ -880,49 +621,46 @@ function initValuesSection() {
  * Team Image Placeholder Function
  ===================================*/
 function initTeamImagePlaceholders() {
-    // Get all member images
     const memberImages = document.querySelectorAll('.member__img');
 
     // Function to handle image loading errors
     function handleImageError(img) {
-        // Create canvas for placeholder
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
 
-        // Set canvas dimensions
         canvas.width = 200;
         canvas.height = 200;
 
-        // Get member name from alt attribute
+        // Gets member name from alt attribute
         const name = img.alt || 'Team Member';
         const initials = name.split(' ').map(n => n[0]).join('');
 
-        // Generate a unique color based on name
+        // Generates a unique color based on name
         const hue = name.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) % 360;
 
-        // Create gradient background
+        // Creates gradient background
         const gradient = ctx.createLinearGradient(0, 0, 200, 200);
         gradient.addColorStop(0, `hsla(${hue}, 70%, 30%, 1)`);
         gradient.addColorStop(1, `hsla(${hue + 60}, 70%, 40%, 1)`);
 
-        // Fill background
+        // Fills background
         ctx.fillStyle = gradient;
         ctx.fillRect(0, 0, 200, 200);
 
-        // Add initials
+        // Adds initials
         ctx.fillStyle = 'white';
         ctx.font = 'bold 72px Poppins, sans-serif';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.fillText(initials, 100, 100);
 
-        // Replace image src with canvas data URL
+        // Replaces image src with canvas data URL
         img.src = canvas.toDataURL('image/png');
     }
 
-    // Add error handler to each image
+    // Adds error handler to each image
     memberImages.forEach(img => {
-        // Try to load from src
+        // Tries to load from src
         img.addEventListener('error', () => handleImageError(img));
 
         // If src is empty or undefined, generate placeholder immediately
@@ -933,18 +671,17 @@ function initTeamImagePlaceholders() {
 }
 
 /**==============================
- * Add to Team Section Animation
+ * Adds to Team Section Animation
  ==============================*/
 function initTeamSection() {
     const teamLeader = document.querySelector('.team__leader');
     const teamMembers = document.querySelectorAll('.team__grid .team__member');
 
-    // Initialize placeholders for missing images
     initTeamImagePlaceholders();
 
     if (!teamLeader && !teamMembers.length) return;
 
-    // Animate with GSAP
+    // Animates with GSAP
     if (window.gsap) {
         // Team leader animation
         if (teamLeader) {
