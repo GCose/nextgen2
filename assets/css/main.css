@@ -2046,31 +2046,27 @@ img {
     font-size: clamp(1.1rem, 2vw, 1.3rem);
 }
 
-/* Main visual container */
 .ecosystem__visual {
-    position: relative;
     min-height: 200vh;
-    /* Tall container to allow for scrolling */
+    position: relative;
 }
 
-/* Fixed diagram wrapper */
+/*========== Fixed diagram wrapper ==========*/
 .ecosystem__diagram-wrapper {
     top: 0;
     left: 0;
     right: 0;
     z-index: 5;
     height: 100vh;
-    position: sticky;
-    /* Key change: makes diagram stick as user scrolls */
     display: flex;
+    position: sticky;
     align-items: center;
     justify-content: center;
 }
 
-/* Diagram styling */
 .ecosystem__diagram {
-    width: 100%;
     opacity: 0;
+    width: 100%;
     height: 500px;
     margin: 0 auto;
     max-width: 500px;
@@ -2108,7 +2104,6 @@ img {
     transform: translate(-50%, -50%) scale(1);
 }
 
-/* Rings styling */
 .ecosystem__ring {
     top: 50%;
     left: 50%;
@@ -2155,7 +2150,7 @@ img {
     transition-delay: 0.5s;
 }
 
-/* Nodes styling */
+/*========== Nodes styling ==========*/
 .ecosystem__node {
     z-index: 5;
     opacity: 0;
@@ -2178,12 +2173,12 @@ img {
 }
 
 .ecosystem__node:hover {
-    background-color: rgba(0, 85, 255, 0.2);
     border-color: rgba(0, 85, 255, 0.5);
     transform: translateY(-5px) scale(1.05);
+    background-color: rgba(0, 85, 255, 0.2);
 }
 
-/* Node positions */
+/*=========== Node positions ===========*/
 .node-1 {
     top: 20%;
     left: 10%;
@@ -2214,7 +2209,7 @@ img {
     transition-delay: 1s;
 }
 
-/* SVG connections */
+/*========== SVG connections ==========*/
 .ecosystem__connections {
     inset: 0;
     z-index: 1;
@@ -2231,13 +2226,11 @@ img {
     stroke-dashoffset: 0;
 }
 
-/* Steps styling */
+/*========== Steps styling ==========*/
 .ecosystem__steps {
     width: 100%;
     z-index: 10;
-    /* Ensure steps appear above diagram */
     padding-top: 100vh;
-    /* Start steps after the fixed diagram */
     position: relative;
 }
 
@@ -2249,7 +2242,6 @@ img {
     border-radius: 20px;
     backdrop-filter: blur(20px);
     background-color: rgba(9, 13, 20, 0.6);
-    /* Add background for better readability */
     transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -2267,7 +2259,6 @@ img {
 
 .ecosystem__step:nth-child(4) {
     margin-bottom: 10rem;
-    /* More space after last step */
 }
 
 .ecosystem__step.active {
@@ -2298,7 +2289,7 @@ img {
     font-size: clamp(1rem, 2.5vw, 1.4rem);
 }
 
-/* Ecosystem comparison */
+/*========== Ecosystem comparison ==========*/
 .ecosystem__comparison {
     opacity: 1;
     margin: 0 auto;
@@ -2412,12 +2403,10 @@ img {
 @media (max-width: 768px) {
     .ecosystem__diagram-wrapper {
         height: 70vh;
-        /* Smaller height on mobile */
     }
 
     .ecosystem__steps {
         padding-top: 50vh;
-        /* Less space before steps on mobile */
     }
 
     .comparison__table-wrapper::after {
