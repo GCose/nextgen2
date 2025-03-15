@@ -2230,7 +2230,7 @@ img {
 .ecosystem__steps {
     width: 100%;
     z-index: 10;
-    padding-top: 100vh;
+    padding-top: 10vh;
     position: relative;
 }
 
