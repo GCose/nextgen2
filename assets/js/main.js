@@ -924,46 +924,41 @@ function initEcosystemDiagram() {
 
     if (!ecosystemDiagram || !ecosystemCenter || !ecosystemRings.length || !ecosystemNodes.length) return;
 
-    /**=======================
-     * Intersection Observer
-     =======================*/
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                // Start animations sequence
-                setTimeout(() => {
-                    // Make diagram visible
-                    ecosystemDiagram.classList.add('visible');
+    // Listen for scroll to activate diagram when it comes into view
+    function activateDiagram() {
+        const diagramRect = ecosystemDiagram.getBoundingClientRect();
 
-                    // Animate center
-                    setTimeout(() => {
-                        ecosystemCenter.classList.add('visible');
-                    }, 200);
+        // Activate when diagram is in view
+        if (diagramRect.top < window.innerHeight && diagramRect.bottom > 0) {
+            // Make diagram visible
+            ecosystemDiagram.classList.add('visible');
 
-                    // Animate rings with staggered delay (already handled by CSS delay)
-                    ecosystemRings.forEach(ring => {
-                        ring.classList.add('visible');
-                    });
+            // Animate center
+            setTimeout(() => {
+                ecosystemCenter.classList.add('visible');
+            }, 200);
 
-                    // Animate nodes with staggered delay (already handled by CSS delay)
-                    ecosystemNodes.forEach(node => {
-                        node.classList.add('visible');
-                    });
+            // Animate rings
+            ecosystemRings.forEach(ring => {
+                ring.classList.add('visible');
+            });
 
-                    // Create connections after elements are visible
-                    setTimeout(() => {
-                        createEcosystemConnections();
-                    }, 1200);
-                }, 300);
+            // Animate nodes
+            ecosystemNodes.forEach(node => {
+                node.classList.add('visible');
+            });
 
-                // Stop observing once animation is triggered
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.2 });
+            // Create connections after elements are visible
+            setTimeout(createEcosystemConnections, 1200);
 
-    // Start observing the diagram
-    observer.observe(ecosystemDiagram);
+            // Remove scroll listener once activated
+            window.removeEventListener('scroll', activateDiagram);
+        }
+    }
+
+    // Initial check and add scroll listener
+    activateDiagram();
+    window.addEventListener('scroll', activateDiagram);
 
     /**==========================================
      * Handle window resize for connection lines
@@ -1072,112 +1067,34 @@ function createEcosystemConnections() {
  * Initialize Ecosystem Scroll Experience
  =========================================*/
 function initEcosystemScrollExperience() {
-    const ecosystemVisual = document.querySelector('.ecosystem__visual');
-    const ecosystemDiagram = document.querySelector('.ecosystem__diagram');
     const ecosystemSteps = document.querySelectorAll('.ecosystem__step');
 
-    // Exits if elements don't exist
-    if (!ecosystemVisual || !ecosystemDiagram || !ecosystemSteps.length) return;
+    // Exit if steps don't exist
+    if (!ecosystemSteps.length) return;
 
-    // Adds smooth transitions to the diagram
-    ecosystemDiagram.style.transition = 'all 0.9s ease-out';
-
-    // Verifies if GSAP and ScrollTrigger are available
-    if (!window.gsap || !window.gsap.ScrollTrigger) {
-        console.warn('GSAP or ScrollTrigger not available for ecosystem scroll experience');
-        initFallbackScrollAnimation();
-        return;
-    }
-
-    const { gsap, ScrollTrigger } = window;
-
-    /**==============================
-     * Initializes GSAP animations
-     ==============================*/
-    // Reveals diagram with scale effect when in view
-    ScrollTrigger.create({
-        trigger: ecosystemDiagram,
-        start: 'center center',
-        onEnter: () => ecosystemDiagram.classList.add('visible'),
-        once: true
-    });
-
-    // Reveals steps one by one with alternating positions as user scrolls
-    ecosystemSteps.forEach((step, index) => {
-        ScrollTrigger.create({
-            trigger: step,
-            start: 'top 70%', // Triggers when step is 70% in view
-            onEnter: () => step.classList.add('active'),
-            onLeaveBack: () => {
-                // Only remove active class when scrolling back up 
-                // Keep first step visible for better UX
-                if (index > 0) {
-                    step.classList.remove('active');
-                }
-            }
-        });
-    });
-
-    // Creates connections between nodes in the ecosystem diagram
-    ScrollTrigger.create({
-        trigger: ecosystemDiagram,
-        start: 'top center',
-        onEnter: () => {
-            setTimeout(createEcosystemConnections, 500);
-        },
-        once: true
-    });
-
-    /**=================================================
-     * Fallback animation using Intersection Observer 
-     * (in case GSAP is not available)
-     =================================================*/
-    function initFallbackScrollAnimation() {
-        // Makes diagram visible
-        ecosystemDiagram.classList.add('visible');
-
-        // Creates observer for steps
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                } else {
-                    if (entry.target !== ecosystemSteps[0]) {
-                        entry.target.classList.remove('active');
-                    }
-                }
-            });
-        }, { threshold: 0.3 });
-
-        // Observes each step
-        ecosystemSteps.forEach(step => {
-            observer.observe(step);
-        });
-
-        // Creates connections
-        setTimeout(createEcosystemConnections, 1000);
-
-        // Makes diagram sticky using scroll events with proper centering
-        window.addEventListener('scroll', () => {
-            const rect = ecosystemVisual.getBoundingClientRect();
-            if (rect.top <= 0 && rect.bottom >= window.innerHeight) {
-                ecosystemDiagram.style.position = 'fixed';
-                ecosystemDiagram.style.top = '50%';
-                ecosystemDiagram.style.left = '50%';
-                ecosystemDiagram.style.transform = 'translate(-50%, -50%)';
-            } else if (rect.top > 0) {
-                ecosystemDiagram.style.position = 'absolute';
-                ecosystemDiagram.style.top = '0';
-                ecosystemDiagram.style.left = '50%';
-                ecosystemDiagram.style.transform = 'translateX(-50%)';
+    // Create intersection observer for steps
+    const stepObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Add active class when step is in view
+                entry.target.classList.add('active');
             } else {
-                ecosystemDiagram.style.position = 'absolute';
-                ecosystemDiagram.style.top = `${ecosystemVisual.offsetHeight - ecosystemDiagram.offsetHeight}px`;
-                ecosystemDiagram.style.left = '50%';
-                ecosystemDiagram.style.transform = 'translateX(-50%)';
+                // Optionally remove active class when step is out of view
+                // Keep first step always visible for better UX
+                if (entry.target !== ecosystemSteps[0]) {
+                    entry.target.classList.remove('active');
+                }
             }
         });
-    }
+    }, {
+        threshold: 0.25, // Trigger when 25% of the step is visible
+        rootMargin: '0px 0px -10% 0px' // Adjust to trigger slightly before the element is fully in view
+    });
+
+    // Observe each step
+    ecosystemSteps.forEach(step => {
+        stepObserver.observe(step);
+    });
 }
 
 /**========================
@@ -1704,8 +1621,8 @@ function init() {
     initHeroSection();
     initChallengesSection();
     initEcosystemSection();
-    initEcosystemScrollExperience();
     initEcosystemDiagram();
+    initEcosystemScrollExperience();
     initCaseStudiesSlider();
     initScrollReveal();
 }
