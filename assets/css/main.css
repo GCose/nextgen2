@@ -2406,7 +2406,7 @@ img {
     }
 
     .ecosystem__steps {
-        padding-top: 50vh;
+        padding-top: 10vh;
     }
 
     .comparison__table-wrapper::after {
@@ -2445,8 +2445,8 @@ img {
 
     .ecosystem__step {
         max-width: 90%;
-        margin-bottom: 20vh;
         padding: 1.5rem;
+        margin-bottom: 20vh;
     }
 
     .ecosystem__step:nth-child(even) {
