@@ -7,7 +7,7 @@ function initHeroSection() {
 
     const gridItems = heroGrid.querySelectorAll('.hero-grid__item');
 
-    // Animate grid items sequentially with GSAP
+    // Animates grid items sequentially with GSAP
     if (window.gsap) {
         gsap.set(gridItems, { opacity: 0, scale: 0.95 });
 
@@ -24,7 +24,7 @@ function initHeroSection() {
                 stagger: 0.15
             });
 
-        // Animate heading text - FIXED SELECTORS
+        // Animates heading text - FIXED SELECTORS
         const heading = document.querySelector('.hero__split-heading');
         const subHeading = document.querySelector('.hero__split-subheading');
         const text = document.querySelector('.hero__split-text');  // Fixed selector (was hero__split__text)
