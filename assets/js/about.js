@@ -24,14 +24,13 @@ function initHeroSection() {
                 stagger: 0.15
             });
 
-        // Animate heading text
+        // Animate heading text - FIXED SELECTORS
         const heading = document.querySelector('.hero__split-heading');
         const subHeading = document.querySelector('.hero__split-subheading');
-        const text = document.querySelector('.hero__split__text');
-        const indicator = document.querySelector('.scroll-indicator');
+        const text = document.querySelector('.hero__split-text');  // Fixed selector (was hero__split__text)
 
-        if (heading && subHeading && text && indicator) {
-            gsap.set([heading, subHeading, text, indicator], { opacity: 0, y: 30 });
+        if (heading && subHeading && text) {
+            gsap.set([heading, subHeading, text], { opacity: 0, y: 30 });
 
             gsap.timeline({
                 delay: 0.8,
@@ -42,8 +41,7 @@ function initHeroSection() {
             })
                 .to(heading, { opacity: 1, y: 0 })
                 .to(subHeading, { opacity: 1, y: 0 }, "-=0.6")
-                .to(text, { opacity: 1, y: 0 }, "-=0.6")
-                .to(indicator, { opacity: 1, y: 0 }, "-=0.5");
+                .to(text, { opacity: 1, y: 0 }, "-=0.6");
         }
 
         // Parallax effect on scroll
