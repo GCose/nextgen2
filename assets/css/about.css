@@ -688,7 +688,7 @@
 
 .difference__blocks {
     z-index: 1;
-    gap: 8rem;
+    gap: 12rem;
     display: flex;
     position: relative;
     flex-direction: column;
@@ -790,7 +790,6 @@
     overflow: hidden;
     aspect-ratio: 4/3;
     position: relative;
-    box-shadow: var(--card-shadow);
     border-radius: var(--radius-lg);
 }
 

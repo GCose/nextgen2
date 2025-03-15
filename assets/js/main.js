@@ -1079,6 +1079,9 @@ function initEcosystemScrollExperience() {
     // Exits if elements don't exist
     if (!ecosystemVisual || !ecosystemDiagram || !ecosystemSteps.length) return;
 
+    // Adds smooth transitions to the diagram
+    ecosystemDiagram.style.transition = 'all 0.9s ease-out';
+
     // Verifies if GSAP and ScrollTrigger are available
     if (!window.gsap || !window.gsap.ScrollTrigger) {
         console.warn('GSAP or ScrollTrigger not available for ecosystem scroll experience');
