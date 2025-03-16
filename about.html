@@ -256,10 +256,11 @@
       <section class="mission-vision section" id="mission-vision">
         <div class="mission-vision__bg"></div>
         <div class="container">
-          <div class="mission-vision__grid">
-            <div class="mission-vision__block mission-vision__block--mission">
-              <div class="mission-vision__content">
-                <div class="mission-vision__icon">
+          <div class="mv-container">
+            <!-- Left side: Mission -->
+            <div class="mv-panel mv-mission">
+              <div class="mv-content">
+                <div class="mv-icon">
                   <svg viewBox="0 0 24 24" fill="none">
                     <path
                       d="M22 12h-4l-3 9L9 3l-3 9H2"
@@ -270,27 +271,51 @@
                     />
                   </svg>
                 </div>
-                <h2 class="mission-vision__title">Our Mission</h2>
-                <div class="mission-vision__text">
-                  <p class="mission-vision__intro">
-                    Our mission is simple yet powerful:
-                  </p>
-                  <div class="mission-vision__quote">
-                    "Your growth challenges is our mission to solve"
+                <div class="mv-path-container">
+                  <svg
+                    class="mv-path"
+                    viewBox="0 0 100 400"
+                    preserveAspectRatio="none"
+                  >
+                    <path
+                      d="M10,0 Q90,100 10,200 Q90,300 10,400"
+                      stroke="url(#mission-gradient)"
+                      stroke-width="2"
+                      fill="none"
+                      stroke-dasharray="1000"
+                      stroke-dashoffset="1000"
+                      class="animate-path"
+                    />
+                    <defs>
+                      <linearGradient
+                        id="mission-gradient"
+                        x1="0%"
+                        y1="0%"
+                        x2="0%"
+                        y2="100%"
+                      >
+                        <stop offset="0%" stop-color="#0044cc" />
+                        <stop offset="100%" stop-color="#0055ff" />
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                </div>
+                <h2 class="mv-title">Our Mission</h2>
+                <div class="mv-text">
+                  <p class="mv-intro">Our mission is simple yet powerful:</p>
+                  <div class="mv-quote">
+                    <div class="quote-decoration left"></div>
+                    <p>"Your growth challenges is our mission to solve"</p>
+                    <div class="quote-decoration right"></div>
                   </div>
                 </div>
               </div>
-              <div
-                class="mission-vision__decoration mission-vision__decoration--1"
-              ></div>
-              <div
-                class="mission-vision__decoration mission-vision__decoration--2"
-              ></div>
             </div>
 
-            <div class="mission-vision__block mission-vision__block--vision">
-              <div class="mission-vision__content">
-                <div class="mission-vision__icon">
+            <!-- Right side: Vision -->
+            <div class="mv-panel mv-vision">
+              <div class="mv-content">
+                <div class="mv-icon">
                   <svg viewBox="0 0 24 24" fill="none">
                     <path
                       d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"
@@ -310,22 +335,59 @@
                     />
                   </svg>
                 </div>
-                <h2 class="mission-vision__title">Our Vision</h2>
-                <div class="mission-vision__text">
-                  <p class="mission-vision__intro">Our vision is clear:</p>
-                  <div class="mission-vision__quote">
-                    "Become the leading partner businesses trust to solve
-                    complex growth challenges through AI infrastructure and SAAS
-                    solutions that creates revenue ecosystem"
+                <div class="mv-path-container">
+                  <svg
+                    class="mv-path"
+                    viewBox="0 0 100 400"
+                    preserveAspectRatio="none"
+                  >
+                    <path
+                      d="M90,0 Q10,100 90,200 Q10,300 90,400"
+                      stroke="url(#vision-gradient)"
+                      stroke-width="2"
+                      fill="none"
+                      stroke-dasharray="1000"
+                      stroke-dashoffset="1000"
+                      class="animate-path"
+                    />
+                    <defs>
+                      <linearGradient
+                        id="vision-gradient"
+                        x1="0%"
+                        y1="0%"
+                        x2="0%"
+                        y2="100%"
+                      >
+                        <stop offset="0%" stop-color="#00d9ff" />
+                        <stop offset="100%" stop-color="#0055ff" />
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                </div>
+                <h2 class="mv-title">Our Vision</h2>
+                <div class="mv-text">
+                  <p class="mv-intro">Our vision is clear:</p>
+                  <div class="mv-quote">
+                    <div class="quote-decoration left"></div>
+                    <p>
+                      "Become the leading partner businesses trust to solve
+                      complex growth challenges through AI infrastructure and
+                      SAAS solutions that creates revenue ecosystem"
+                    </p>
+                    <div class="quote-decoration right"></div>
                   </div>
                 </div>
               </div>
-              <div
-                class="mission-vision__decoration mission-vision__decoration--3"
-              ></div>
-              <div
-                class="mission-vision__decoration mission-vision__decoration--4"
-              ></div>
+            </div>
+
+            <!-- Interactive circles that float and move with mouse -->
+            <div class="mv-floating-elements">
+              <div class="mv-circle c1"></div>
+              <div class="mv-circle c2"></div>
+              <div class="mv-circle c3"></div>
+              <div class="mv-circle c4"></div>
+              <div class="mv-circle c5"></div>
+              <div class="mv-circle c6"></div>
             </div>
           </div>
         </div>

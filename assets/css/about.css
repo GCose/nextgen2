@@ -519,6 +519,9 @@
     overflow: hidden;
     position: relative;
     background-color: #101520;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
 }
 
 .mission-vision__bg {
@@ -533,143 +536,365 @@
         radial-gradient(circle at 80% 70%, var(--cyan-100), transparent 40%);
 }
 
-.mission-vision__grid {
-    gap: 3rem;
+/* Main container for mission & vision */
+.mv-container {
+    position: relative;
     z-index: 1;
     display: grid;
-    position: relative;
-    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    min-height: 80vh;
+    perspective: 1000px;
 }
 
-.mission-vision__block {
-    z-index: 1;
-    padding: 3.5rem;
+/* Panel styling (shared between mission & vision) */
+.mv-panel {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
+    border-radius: 16px;
     overflow: hidden;
-    position: relative;
-    backdrop-filter: blur(10px);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--card-shadow);
-    background: rgba(17, 24, 39, 0.7);
+    transition: transform 0.5s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+    transform-style: preserve-3d;
+    backdrop-filter: blur(5px);
 }
 
-.mission-vision__content {
+/* 3D hover effect */
+.mv-panel:hover {
+    transform: translateY(-10px) rotateX(2deg) rotateY(2deg);
+}
+
+/* Mission panel specific styling */
+.mv-mission {
+    background: linear-gradient(135deg, rgba(0, 68, 204, 0.1), rgba(0, 85, 255, 0.03));
+    border-left: 3px solid var(--primary-color);
+    transform-origin: left center;
+}
+
+/* Vision panel specific styling */
+.mv-vision {
+    background: linear-gradient(135deg, rgba(0, 217, 255, 0.03), rgba(0, 85, 255, 0.1));
+    border-right: 3px solid var(--secondary-color);
+    transform-origin: right center;
+}
+
+/* Content container */
+.mv-content {
+    padding: 3rem 2.5rem;
+    position: relative;
     z-index: 2;
-    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
-.mission-vision__icon {
+/* Icon styling */
+.mv-icon {
     width: 60px;
     height: 60px;
     display: flex;
-    color: white;
-    margin-bottom: 2rem;
     align-items: center;
     justify-content: center;
+    margin-bottom: 2rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s cubic-bezier(0.17, 0.67, 0.83, 0.67) 0.3s;
 }
 
-.mission-vision__icon svg {
+.mv-icon svg {
     width: 40px;
     height: 40px;
 }
 
-.mission-vision__block--mission .mission-vision__icon {
+.mv-mission .mv-icon {
     color: var(--primary-color);
 }
 
-.mission-vision__block--vision .mission-vision__icon {
+.mv-vision .mv-icon {
     color: var(--secondary-color);
 }
 
-.mission-vision__title {
+/* Title styling */
+.mv-title {
     color: white;
-    font-size: 2rem;
+    font-size: 3rem;
     font-weight: 700;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2.5rem;
+    position: relative;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s cubic-bezier(0.17, 0.67, 0.83, 0.67) 0.5s;
 }
 
-.mission-vision__text {
+.mv-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 50px;
+    height: 4px;
+    border-radius: 2px;
+}
+
+.mv-mission .mv-title::after {
+    background: var(--primary-color);
+}
+
+.mv-vision .mv-title::after {
+    background: var(--secondary-color);
+}
+
+/* Text styling */
+.mv-text {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s cubic-bezier(0.17, 0.67, 0.83, 0.67) 0.7s;
+}
+
+.mv-intro {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
     color: var(--text-secondary);
 }
 
-.mission-vision__intro {
-    font-size: 1.1rem;
-    margin-bottom: 1.5rem;
-}
-
-.mission-vision__quote {
-    color: white;
-    padding: 1.5rem;
-    line-height: 1.6;
-    font-weight: 600;
-    font-size: 1.3rem;
-    font-style: italic;
+.mv-quote {
     position: relative;
-    background: var(--blue-100);
-    border-radius: var(--radius-md);
+    padding: 2.5rem 1.5rem;
+    color: white;
+    font-weight: 600;
+    font-size: 1.5rem;
+    line-height: 1.7;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    background: rgba(17, 24, 39, 0.3);
 }
 
-.mission-vision__quote::before {
-    top: 5px;
-    left: 10px;
-    content: '"';
-    line-height: 1;
-    font-size: 3rem;
+.mv-mission .mv-quote {
+    box-shadow: 0 10px 30px -10px rgba(0, 85, 255, 0.3);
+}
+
+.mv-vision .mv-quote {
+    box-shadow: 0 10px 30px -10px rgba(0, 217, 255, 0.3);
+}
+
+/* Quote decorations */
+.quote-decoration {
     position: absolute;
-    font-style: normal;
-    color: var(--blue-300);
+    width: 30px;
+    height: 30px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    opacity: 0.5;
 }
 
-.mission-vision__decoration {
+.quote-decoration.left {
+    top: 15px;
+    left: 15px;
+    background-image: url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M13 8C13 3.58172 9.41828 0 5 0H0V5C0 9.41828 3.58172 13 8 13H13V8Z' fill='%230055ff'/%3E%3Cpath d='M28 8C28 3.58172 24.4183 0 20 0H15V5C15 9.41828 18.5817 13 23 13H28V8Z' fill='%230055ff'/%3E%3C/svg%3E");
+}
+
+.quote-decoration.right {
+    bottom: 15px;
+    right: 15px;
+    background-image: url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M13 8C13 3.58172 9.41828 0 5 0H0V5C0 9.41828 3.58172 13 8 13H13V8Z' fill='%2300d9ff'/%3E%3Cpath d='M28 8C28 3.58172 24.4183 0 20 0H15V5C15 9.41828 18.5817 13 23 13H28V8Z' fill='%2300d9ff'/%3E%3C/svg%3E");
+    transform: rotate(180deg);
+}
+
+/* Path container and SVG */
+.mv-path-container {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.2;
+}
+
+.mv-path {
+    height: 100%;
+    width: 100%;
+}
+
+/* Animated path */
+@keyframes dash {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+/* Floating elements */
+.mv-floating-elements {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     z-index: 0;
+    pointer-events: none;
+}
+
+.mv-circle {
     position: absolute;
     border-radius: 50%;
-    filter: blur(40px);
+    opacity: 0.15;
+    filter: blur(30px);
+    transition: all 1s cubic-bezier(0.17, 0.67, 0.83, 0.67);
 }
 
-.mission-vision__decoration--1 {
-    top: -50px;
-    right: -50px;
-    width: 200px;
-    height: 200px;
-    background: var(--blue-200);
-}
-
-.mission-vision__decoration--2 {
-    left: 20%;
+.c1 {
+    top: 20%;
+    left: 10%;
     width: 150px;
     height: 150px;
-    bottom: -40px;
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--primary-color);
+    animation: floating 20s infinite alternate ease-in-out;
 }
 
-.mission-vision__decoration--3 {
+.c2 {
+    top: 70%;
     left: 20%;
-    top: -40px;
-    width: 180px;
-    height: 180px;
-    background: var(--cyan-100);
+    width: 100px;
+    height: 100px;
+    background: var(--secondary-color);
+    animation: floating 15s infinite alternate-reverse ease-in-out;
 }
 
-.mission-vision__decoration--4 {
-    right: -50px;
-    width: 220px;
-    height: 220px;
-    bottom: -50px;
-    background: rgba(255, 255, 255, 0.03);
+.c3 {
+    top: 30%;
+    right: 15%;
+    width: 120px;
+    height: 120px;
+    background: var(--primary-color);
+    animation: floating 18s infinite alternate ease-in-out;
 }
 
-/**====================
- * BREAKPOINT STYLES
- ====================*/
-@media (max-width: 768px) {
-    .mission-vision__grid {
+.c4 {
+    bottom: 20%;
+    right: 10%;
+    width: 150px;
+    height: 150px;
+    background: var(--secondary-color);
+    animation: floating 22s infinite alternate-reverse ease-in-out;
+}
+
+.c5 {
+    top: 50%;
+    left: 50%;
+    width: 200px;
+    height: 200px;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    transform: translate(-50%, -50%);
+    opacity: 0.05;
+    animation: pulse 10s infinite alternate;
+}
+
+.c6 {
+    bottom: 5%;
+    left: 40%;
+    width: 100px;
+    height: 100px;
+    background: var(--primary-color);
+    animation: floating 16s infinite alternate ease-in-out;
+}
+
+@keyframes floating {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    50% {
+        transform: translate(-20px, 20px);
+    }
+
+    100% {
+        transform: translate(20px, -20px);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: translate(-50%, -50%) scale(0.8);
+        opacity: 0.05;
+    }
+
+    50% {
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 0.08;
+    }
+
+    100% {
+        transform: translate(-50%, -50%) scale(0.8);
+        opacity: 0.05;
+    }
+}
+
+/* Animation classes when in viewport */
+.mission-vision.in-view .mv-icon,
+.mission-vision.in-view .mv-title,
+.mission-vision.in-view .mv-text {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.mission-vision.in-view .animate-path {
+    animation: dash 2s forwards ease-in-out;
+}
+
+/* Mouse movement effect - will be controlled via JS */
+.mission-vision.mouse-active .mv-circle {
+    transition: transform 2s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+}
+
+/* Media queries */
+@media (max-width: 992px) {
+    .mv-container {
         grid-template-columns: 1fr;
+        gap: 4rem;
+    }
+
+    .mv-panel {
+        min-height: 400px;
+    }
+}
+
+@media (max-width: 768px) {
+    .mission-vision {
+        padding: 4rem 0;
+    }
+
+    .mv-title {
+        font-size: 2.2rem;
+    }
+
+    .mv-quote {
+        font-size: 1.2rem;
+        padding: 2rem 1.25rem;
     }
 }
 
 @media (max-width: 576px) {
-    .mission-vision__block {
-        padding: 2rem;
+    .mv-content {
+        padding: 2rem 1.5rem;
+    }
+
+    .mv-icon {
+        width: 50px;
+        height: 50px;
+        margin-bottom: 1.5rem;
+    }
+
+    .mv-icon svg {
+        width: 30px;
+        height: 30px;
+    }
+
+    .mv-title {
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
     }
 }
 
