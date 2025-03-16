@@ -555,32 +555,83 @@ function initSolutionEcosystem() {
  * Mission & Vision Section Animation
  =================================*/
 function initMissionVisionSection() {
-    const missionVisionBlocks = document.querySelectorAll('.mission-vision__block');
-    if (!missionVisionBlocks.length) return;
+    const section = document.querySelector('.mission-vision');
+    if (!section) return;
 
-    if (window.gsap) {
-        missionVisionBlocks.forEach(block => {
-            const icon = block.querySelector('.mission-vision__icon');
-            const title = block.querySelector('.mission-vision__title');
-            const intro = block.querySelector('.mission-vision__intro');
-            const quote = block.querySelector('.mission-vision__quote');
+    // Add scroll-based animation
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    section.classList.add('in-view');
 
-            if (!icon || !title || !intro || !quote) return;
+                    // Start monitoring mouse movement once in view
+                    startMouseTracking();
 
-            gsap.set([icon, title, intro, quote], { opacity: 0, y: 30 });
-
-            gsap.timeline({
-                scrollTrigger: {
-                    trigger: block,
-                    start: 'top 70%',
-                    end: 'center center',
-                    toggleActions: 'play none none reverse'
+                    // Stop observing once animation is triggered
+                    observer.unobserve(entry.target);
                 }
-            })
-                .to(icon, { opacity: 1, y: 0, duration: 0.6 })
-                .to(title, { opacity: 1, y: 0, duration: 0.6 }, "-=0.4")
-                .to(intro, { opacity: 1, y: 0, duration: 0.6 }, "-=0.4")
-                .to(quote, { opacity: 1, y: 0, duration: 0.8, ease: "back.out(1.2)" }, "-=0.4");
+            });
+        },
+        { threshold: 0.2 }
+    );
+
+    observer.observe(section);
+
+    // Mouse movement parallax effect
+    function startMouseTracking() {
+        const floatingElements = section.querySelectorAll('.mv-circle');
+        const panels = section.querySelectorAll('.mv-panel');
+
+        section.classList.add('mouse-active');
+
+        document.addEventListener('mousemove', (e) => {
+            // Only apply effect if section is in viewport
+            const rect = section.getBoundingClientRect();
+            if (rect.bottom < 0 || rect.top > window.innerHeight) return;
+
+            // Calculate mouse position relative to the section
+            const mouseX = (e.clientX / window.innerWidth) - 0.5;
+            const mouseY = (e.clientY / window.innerHeight) - 0.5;
+
+            // Apply movement to floating elements with different intensity
+            floatingElements.forEach((el, index) => {
+                const depth = 0.5 + (index % 3) * 0.2; // Different depth for each element
+                gsap.to(el, {
+                    x: mouseX * 100 * depth,
+                    y: mouseY * 100 * depth,
+                    duration: 1,
+                    ease: "power2.out"
+                });
+            });
+
+            // Apply subtle tilt to panels
+            panels.forEach((panel, index) => {
+                const isLeft = index === 0;
+                const rotateY = isLeft ? mouseX * 5 : -mouseX * 5;
+                const rotateX = -mouseY * 5;
+
+                gsap.to(panel, {
+                    rotateY: rotateY,
+                    rotateX: rotateX,
+                    duration: 1,
+                    ease: "power2.out"
+                });
+            });
+        });
+    }
+
+    // Initialize path animations when in view
+    if (window.gsap) {
+        gsap.from('.mv-path path', {
+            scrollTrigger: {
+                trigger: section,
+                start: 'top 70%',
+                toggleActions: 'play none none none'
+            },
+            strokeDashoffset: 1000,
+            duration: 2,
+            ease: "power2.out"
         });
     }
 }
