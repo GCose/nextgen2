@@ -26,6 +26,29 @@
     color: var(--secondary-color);
 }
 
+/**=======================
+ * PARTICLE ANIMATIONS
+ =======================*/
+.narrative__particles,
+.difference__particles {
+    top: 0;
+    left: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
+    pointer-events: none;
+}
+
+#narrative-particles-canvas,
+#difference-particles-canvas {
+    width: 100%;
+    height: 100%;
+    opacity: 0.8;
+    display: block;
+}
+
 /**======================
  * HERO SPLIT SECTION
  ======================*/
@@ -947,36 +970,6 @@
     text-align: center;
     line-height: 1.8;
     color: var(--text-secondary);
-}
-
-/**====================
- * BREAKPOINT STYLES
- ====================*/
-@media (max-width: 768px) {
-    .value-card {
-        height: auto;
-    }
-
-    .value-card__front,
-    .value-card__back {
-        position: relative;
-        transform: rotateY(0);
-        backface-visibility: visible;
-    }
-
-    .value-card__back {
-        display: none;
-        margin-top: 1rem;
-    }
-
-    .value-card:hover .value-card__front {
-        transform: rotateY(0);
-    }
-
-    .value-card:hover .value-card__back {
-        display: flex;
-        transform: rotateY(0);
-    }
 }
 
 /**=====================

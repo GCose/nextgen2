@@ -1,3 +1,156 @@
+/**==============================
+ * Initialize Particle Effects
+ ==============================*/
+function initSectionParticles() {
+    console.log("Initializing particles");
+
+    // Initializes particles for narrative section with blue theme
+    const narrativeParticles = document.querySelector('.narrative__particles');
+    if (narrativeParticles) {
+        initParticlesAnimation('narrative-particles-canvas', 200, 'blue');
+    } else {
+    }
+
+    // Initializes particles for difference section with cyan theme
+    const differenceParticles = document.querySelector('.difference__particles');
+    if (differenceParticles) {
+        initParticlesAnimation('difference-particles-canvas', 200, 'cyan');
+    } else {
+
+    }
+}
+
+/**========================
+ * PARTICLES ANIMATION
+ ========================*/
+function initParticlesAnimation(containerId, particleCount = 200, particleColor = 'blue') {
+    const container = document.getElementById(containerId);
+    if (!container) {
+        return;
+    }
+
+    const ctx = container.getContext('2d');
+    if (!ctx) {
+        return;
+    }
+
+    // Sets canvas size
+    function resizeCanvas() {
+        const parent = container.parentElement;
+        container.width = parent.offsetWidth;
+        container.height = parent.offsetHeight;
+    }
+
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    // Particle properties
+    const particles = [];
+
+    // Color variations based on the theme
+    function getColor() {
+        if (particleColor === 'blue') {
+            // Blue theme
+            const blues = [
+                `rgba(${Math.floor(Math.random() * 50)}, ${Math.floor(Math.random() * 100) + 150}, 255, ${Math.random() * 0.5 + 0.2})`,
+                `rgba(0, ${Math.floor(Math.random() * 100) + 155}, 255, ${Math.random() * 0.5 + 0.2})`,
+                `rgba(0, ${Math.floor(Math.random() * 150) + 100}, 255, ${Math.random() * 0.5 + 0.2})`
+            ];
+            return blues[Math.floor(Math.random() * blues.length)];
+        } else {
+            // Cyan theme
+            const cyans = [
+                `rgba(0, ${Math.floor(Math.random() * 100) + 155}, ${Math.floor(Math.random() * 50) + 200}, ${Math.random() * 0.5 + 0.2})`,
+                `rgba(0, ${Math.floor(Math.random() * 150) + 100}, 255, ${Math.random() * 0.5 + 0.2})`,
+                `rgba(0, 217, 255, ${Math.random() * 0.5 + 0.2})`
+            ];
+            return cyans[Math.floor(Math.random() * cyans.length)];
+        }
+    }
+
+    // Create particles
+    for (let i = 0; i < particleCount; i++) {
+        particles.push({
+            x: Math.random() * container.width,
+            y: Math.random() * container.height,
+            radius: Math.random() * 2 + 1,
+            color: getColor(),
+            vx: (Math.random() - 0.5) * 1.5,
+            vy: (Math.random() - 0.5) * 1.5,
+            connectionRadius: Math.random() * 50 + 100
+        });
+    }
+
+    // Animation loop
+    function animate() {
+        if (!ctx) return; // Safety check
+
+        ctx.clearRect(0, 0, container.width, container.height);
+
+        // Updates and draws particles
+        particles.forEach(particle => {
+            // Moves particle
+            particle.x += particle.vx;
+            particle.y += particle.vy;
+
+            // Bounces off edges
+            if (particle.x < 0 || particle.x > container.width) {
+                particle.vx *= -1;
+                particle.x = particle.x < 0 ? 0 : container.width;
+            }
+
+            if (particle.y < 0 || particle.y > container.height) {
+                particle.vy *= -1;
+                particle.y = particle.y < 0 ? 0 : container.height;
+            }
+
+            // Applies friction/damping
+            particle.vx *= 0.99;
+            particle.vy *= 0.99;
+
+            // Adds random movement
+            if (Math.random() < 0.05) {
+                particle.vx += (Math.random() - 0.5) * 1.15;
+                particle.vy += (Math.random() - 0.5) * 1.15;
+            }
+
+            // Draws particle
+            ctx.beginPath();
+            ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+            ctx.fillStyle = particle.color;
+            ctx.fill();
+        });
+
+        // Connects particles
+        for (let i = 0; i < particles.length; i++) {
+            for (let j = i + 1; j < particles.length; j++) {
+                const dx = particles[i].x - particles[j].x;
+                const dy = particles[i].y - particles[j].y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+
+                const connectionDistance = (particles[i].connectionRadius + particles[j].connectionRadius) / 2;
+
+                if (distance < connectionDistance) {
+                    // Calculates opacity based on distance
+                    const opacity = 0.2 * (1 - distance / connectionDistance);
+
+                    // Get base color
+                    const baseColor = particleColor === 'blue' ? '0, 85, 255' : '0, 217, 255';
+
+                    ctx.beginPath();
+                    ctx.strokeStyle = `rgba(${baseColor}, ${opacity})`;
+                    ctx.lineWidth = 0.5;
+                    ctx.moveTo(particles[i].x, particles[i].y);
+                    ctx.lineTo(particles[j].x, particles[j].y);
+                    ctx.stroke();
+                }
+            }
+        }
+        requestAnimationFrame(animate);
+    }
+    animate();
+}
+
 /**============================
  * Hero Section Animation
  ============================*/
@@ -818,6 +971,7 @@ function initScrollAnimations() {
  * Initialize All Functions
  ===========================*/
 function initAboutPage() {
+    initSectionParticles();
     initHeroSection();
     initNarrativeSection();
     initMissionVisionSection();
