@@ -217,7 +217,6 @@
     overflow: hidden;
     position: relative;
     border-radius: 20px;
-    transition: 0.5s ease-in-out;
 }
 
 .team__thumbnail:hover {
@@ -228,7 +227,7 @@
     width: 150px;
     height: 220px;
     object-fit: cover;
-    transition: transform 0.5s var(--ease);
+    transition: 0.5s ease-in-out;
 }
 
 .team__thumbnail:hover .team__thumbnail-img {
