@@ -588,10 +588,8 @@ function initFormSubmission() {
         alert('Your blog post has been saved as a draft');
     });
 
-    // Form submission handler
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-
+    // Publish button click handler (instead of form submit)
+    publishBtn.addEventListener('click', async () => {
         // Validate all tabs before submission
         if (!validateAllTabs()) return;
 
