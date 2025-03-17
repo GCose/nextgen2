@@ -217,7 +217,7 @@
     overflow: hidden;
     position: relative;
     border-radius: 20px;
-    transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+    transition: 0.5s ease-in-out;
 }
 
 .team__thumbnail:hover {
