@@ -219,10 +219,6 @@
     border-radius: 20px;
 }
 
-.team__thumbnail:hover {
-    transform: translateY(-5px);
-}
-
 .team__thumbnail-img {
     width: 150px;
     height: 220px;
