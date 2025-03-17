@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NextGen | Create Blog Post</title>
+
+    <!--==================== Meta Tags ====================-->
+    <meta
+      name="description"
+      content="Create and publish blog posts for NextGen Growth Operators."
+    />
+    <meta
+      name="keywords"
+      content="NextGen, Content Management, Blog Creation"
+    />
+    <!--==================== End of Meta Tags ====================-->
+
+    <!--==================== Favicon ====================-->
+    <link href="./assets/images/logo-icon/Icon.png" rel="icon" />
+    <!--==================== End of Favicon ====================-->
+
+    <!--==================== Fonts ====================-->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+    />
+    <!--==================== End of Fonts ====================-->
+
+    <!--==================== Stylesheet ====================-->
+    <link rel="stylesheet" href="./assets/css/main.css" />
+    <link rel="stylesheet" href="./assets/css/blog.css" />
+    <link rel="stylesheet" href="./assets/css/create-blog.css" />
+    <!--==================== End of Stylesheet ====================-->
+
+    <!--==================== Rich Text Editor ====================-->
+    <link
+      href="https://cdn.quilljs.com/1.3.6/quill.snow.css"
+      rel="stylesheet"
+    />
+    <!--==================== End of Rich Text Editor ====================-->
+  </head>
+  <body>
+    <!--==================== Preloader ====================-->
+    <div class="preloader">
+      <div class="preloader__content">
+        <div class="preloader__logo">BLOG MANAGER</div>
+        <div class="preloader__progress">
+          <div class="preloader__bar"></div>
+        </div>
+        <div class="preloader__text">Content Creation Dashboard</div>
+      </div>
+    </div>
+    <!--==================== End of Preloader ====================-->
+
+    <!--==================== Navigation ====================-->
+    <header class="header">
+      <nav class="nav container">
+        <a href="index.html" class="nav__logo">
+          <span class="nav__logo-text">NextGen</span>
+        </a>
+
+        <div class="nav__menu">
+          <ul class="nav__list">
+            <li class="nav__item">
+              <a href="./index.html" class="nav__link">Home</a>
+            </li>
+            <li class="nav__item">
+              <a href="./about.html" class="nav__link">About Us</a>
+            </li>
+            <li class="nav__item">
+              <a href="./team.html" class="nav__link">Our Team</a>
+            </li>
+            <li class="nav__item">
+              <a href="./blog.html" class="nav__link">Blog</a>
+            </li>
+            <li class="nav__item">
+              <a href="./contact.html" class="nav__link">Contact</a>
+            </li>
+          </ul>
+
+          <a href="#" class="button nav__button blog-preview-btn">Preview</a>
+
+          <div class="nav__close" id="nav-close">
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+
+        <div class="nav__toggle" id="nav-toggle">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </nav>
+    </header>
+    <!--==================== End of Navigation ====================-->
+
+    <!--==================== Main Content ====================-->
+    <main class="main">
+      <!--==================== Hero Section ====================-->
+      <section class="blog-create__hero" id="blog-create-hero">
+        <!--==================== Floating Elements Layer ====================-->
+        <div class="float__elements">
+          <div class="float__element e0"></div>
+          <div class="float__element e1"></div>
+        </div>
+        <!--==================== End of Floating Elements Layer ====================-->
+        <div class="blog-create__hero-bg"></div>
+        <div class="container">
+          <div class="blog-create__hero-content">
+            <h1 class="blog-create__hero-title">
+              Create <span class="gradient-text">Blog Post</span>
+            </h1>
+            <p class="blog-create__hero-subtitle">
+              Create engaging content for the NextGen audience
+            </p>
+          </div>
+        </div>
+      </section>
+      <!--==================== End of Hero Section ====================-->
+
+      <!--==================== Blog Creation Form ====================-->
+      <section class="blog-create__form section" id="blog-create-form">
+        <!--==================== Floating Elements Layer ====================-->
+        <div class="float__elements">
+          <div class="float__element e0"></div>
+          <div class="float__element e1"></div>
+          <div class="float__element e2"></div>
+          <div class="float__element e3"></div>
+          <div class="float__element e4"></div>
+          <div class="float__element e5"></div>
+        </div>
+        <!--==================== End of Floating Elements Layer ====================-->
+
+        <div class="container">
+          <div class="blog-create__container">
+            <div class="blog-create__tabs">
+              <button class="blog-create__tab active" data-tab="basic-info">
+                Basic Info
+              </button>
+              <button class="blog-create__tab" data-tab="content">
+                Content
+              </button>
+              <button class="blog-create__tab" data-tab="seo-settings">
+                SEO & Settings
+              </button>
+              <button class="blog-create__tab" data-tab="preview">
+                Preview
+              </button>
+            </div>
+
+            <form id="blog-create-form" class="blog-create__form-content">
+              <!-- Tab 1: Basic Info -->
+              <div class="blog-create__tab-content active" id="basic-info">
+                <div class="form__group">
+                  <label for="blog-title" class="form__label">Blog Title</label>
+                  <input
+                    type="text"
+                    id="blog-title"
+                    name="blog-title"
+                    class="form__input"
+                    placeholder="e.g., How AI Infrastructure is Revolutionizing Business Growth"
+                    required
+                  />
+                </div>
+
+                <div class="form__group">
+                  <label for="blog-categories" class="form__label"
+                    >Categories</label
+                  >
+                  <div class="blog-categories__container">
+                    <div class="blog-category__chips">
+                      <!-- Categories will be displayed here -->
+                    </div>
+                    <input
+                      type="text"
+                      id="blog-categories"
+                      class="form__input"
+                      placeholder="Add category and press Enter"
+                    />
+                    <input
+                      type="hidden"
+                      name="categories"
+                      id="categories-hidden"
+                    />
+                  </div>
+                </div>
+
+                <div class="form__row">
+                  <div class="form__group">
+                    <label for="author-name" class="form__label"
+                      >Author Name</label
+                    >
+                    <input
+                      type="text"
+                      id="author-name"
+                      name="author-name"
+                      class="form__input"
+                      placeholder="e.g., Ebrima Senghore"
+                      required
+                    />
+                  </div>
+                  <div class="form__group">
+                    <label for="author-role" class="form__label"
+                      >Author Role</label
+                    >
+                    <input
+                      type="text"
+                      id="author-role"
+                      name="author-role"
+                      class="form__input"
+                      placeholder="e.g., CEO & Founder"
+                    />
+                  </div>
+                </div>
+
+                <div class="form__group">
+                  <label for="featured-image" class="form__label"
+                    >Featured Image</label
+                  >
+                  <div class="image-upload__container">
+                    <input
+                      type="file"
+                      id="featured-image"
+                      name="featured-image"
+                      class="image-upload__input"
+                      accept="image/*"
+                    />
+                    <div class="image-upload__preview">
+                      <div class="image-upload__placeholder">
+                        <svg
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <rect
+                            x="3"
+                            y="3"
+                            width="18"
+                            height="18"
+                            rx="2"
+                            ry="2"
+                          />
+                          <circle cx="8.5" cy="8.5" r="1.5" />
+                          <polyline points="21 15 16 10 5 21" />
+                        </svg>
+                        <span>Upload Featured Image</span>
+                      </div>
+                      <img
+                        id="image-preview"
+                        src="#"
+                        alt="Preview"
+                        style="display: none"
+                      />
+                    </div>
+                    <button
+                      type="button"
+                      class="image-upload__remove"
+                      style="display: none"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                </div>
+
+                <div class="form__group">
+                  <label for="blog-excerpt" class="form__label">Excerpt</label>
+                  <textarea
+                    id="blog-excerpt"
+                    name="blog-excerpt"
+                    class="form__textarea"
+                    placeholder="Brief summary of the blog post (displayed in blog cards)"
+                    rows="3"
+                    required
+                  ></textarea>
+                </div>
+
+                <div class="form__actions">
+                  <button
+                    type="button"
+                    class="button button__primary next-tab-btn"
+                    data-next="content"
+                  >
+                    Continue to Content
+                  </button>
+                </div>
+              </div>
+
+              <!-- Tab 2: Content -->
+              <div class="blog-create__tab-content" id="content">
+                <div class="form__group">
+                  <label for="blog-content" class="form__label"
+                    >Blog Content</label
+                  >
+                  <div id="editor-container" class="rich-text-editor"></div>
+                  <input
+                    type="hidden"
+                    name="blog-content"
+                    id="blog-content-hidden"
+                  />
+                </div>
+
+                <div class="form__actions">
+                  <button
+                    type="button"
+                    class="button button__outline prev-tab-btn"
+                    data-prev="basic-info"
+                  >
+                    Back
+                  </button>
+                  <button
+                    type="button"
+                    class="button button__primary next-tab-btn"
+                    data-next="seo-settings"
+                  >
+                    Continue to SEO & Settings
+                  </button>
+                </div>
+              </div>
+
+              <!-- Tab 3: SEO & Settings -->
+              <div class="blog-create__tab-content" id="seo-settings">
+                <div class="form__group">
+                  <label for="meta-title" class="form__label">Meta Title</label>
+                  <input
+                    type="text"
+                    id="meta-title"
+                    name="meta-title"
+                    class="form__input"
+                    placeholder="SEO title (defaults to blog title if left empty)"
+                  />
+                </div>
+
+                <div class="form__group">
+                  <label for="meta-description" class="form__label"
+                    >Meta Description</label
+                  >
+                  <textarea
+                    id="meta-description"
+                    name="meta-description"
+                    class="form__textarea"
+                    placeholder="SEO description (defaults to excerpt if left empty)"
+                    rows="3"
+                  ></textarea>
+                </div>
+
+                <div class="form__row">
+                  <div class="form__group">
+                    <label for="publish-date" class="form__label"
+                      >Publish Date</label
+                    >
+                    <input
+                      type="date"
+                      id="publish-date"
+                      name="publish-date"
+                      class="form__input"
+                    />
+                  </div>
+                  <div class="form__group">
+                    <label for="read-time" class="form__label"
+                      >Read Time (minutes)</label
+                    >
+                    <input
+                      type="number"
+                      id="read-time"
+                      name="read-time"
+                      class="form__input"
+                      min="1"
+                      placeholder="e.g., 8"
+                    />
+                  </div>
+                </div>
+
+                <div class="form__group">
+                  <div class="form__checkbox-group">
+                    <input
+                      type="checkbox"
+                      id="featured-post"
+                      name="featured-post"
+                      class="form__checkbox"
+                    />
+                    <label for="featured-post" class="form__checkbox-label"
+                      >Mark as Featured Post</label
+                    >
+                  </div>
+                </div>
+
+                <div class="form__actions">
+                  <button
+                    type="button"
+                    class="button button__outline prev-tab-btn"
+                    data-prev="content"
+                  >
+                    Back
+                  </button>
+                  <button
+                    type="button"
+                    class="button button__primary next-tab-btn"
+                    data-next="preview"
+                  >
+                    Preview Post
+                  </button>
+                </div>
+              </div>
+
+              <!-- Tab 4: Preview -->
+              <div class="blog-create__tab-content" id="preview">
+                <div class="blog-preview">
+                  <div class="blog-preview__header">
+                    <h2 class="preview-title">Preview</h2>
+                    <p class="preview-notice">
+                      This is how your blog post will appear on the site.
+                    </p>
+                  </div>
+
+                  <div class="blog-preview__content">
+                    <!-- Blog preview will be dynamically generated here -->
+                    <div class="blog-preview__loader">
+                      <div class="loader-spinner"></div>
+                      <p>Generating preview...</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form__actions">
+                  <button
+                    type="button"
+                    class="button button__outline prev-tab-btn"
+                    data-prev="seo-settings"
+                  >
+                    Back
+                  </button>
+                  <div class="publish-actions">
+                    <button
+                      type="button"
+                      class="button button__secondary save-draft-btn"
+                    >
+                      Save as Draft
+                    </button>
+                    <button
+                      type="submit"
+                      class="button button__primary publish-btn"
+                    >
+                      Publish Post
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+      <!--==================== End of Blog Creation Form ====================-->
+    </main>
+    <!--==================== End of Main Content ====================-->
+
+    <!--==================== Footer ====================-->
+    <footer class="footer">
+      <div class="footer__container container">
+        <div class="footer__content">
+          <div class="footer__info">
+            <a href="#" class="footer__logo">NextGen</a>
+            <p class="footer__description">
+              We solve business growth challenges with
+              <span class="highlight">AI</span> and
+              <span class="highlight">innovation</span>. NextGen goes beyond
+              traditional agencies—we're Growth Operators.
+            </p>
+
+            <ul class="footer__social">
+              <li>
+                <a href="#" class="footer__social-link" aria-label="LinkedIn">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path
+                      d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"
+                    ></path>
+                    <rect x="2" y="9" width="4" height="12"></rect>
+                    <circle cx="4" cy="4" r="2"></circle>
+                  </svg>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="footer__social-link" aria-label="Twitter">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path
+                      d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"
+                    ></path>
+                  </svg>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="footer__social-link" aria-label="Instagram">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <rect
+                      x="2"
+                      y="2"
+                      width="20"
+                      height="20"
+                      rx="5"
+                      ry="5"
+                    ></rect>
+                    <path
+                      d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"
+                    ></path>
+                    <line x1="17.5" y1="6.5" x2="17.5" y2="6.5"></line>
+                  </svg>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="footer__links">
+            <div class="footer__group">
+              <h3 class="footer__title">Company</h3>
+              <ul class="footer__list">
+                <li><a href="./about.html" class="footer__link">About</a></li>
+                <li><a href="./team.html" class="footer__link">Team</a></li>
+                <li><a href="#" class="footer__link">Careers</a></li>
+                <li>
+                  <a href="./contact.html" class="footer__link">Contact</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="footer__group">
+              <h3 class="footer__title">Solutions</h3>
+              <ul class="footer__list">
+                <li><a href="#" class="footer__link">AI Strategy</a></li>
+                <li><a href="#" class="footer__link">Growth Marketing</a></li>
+                <li><a href="#" class="footer__link">Web Development</a></li>
+                <li><a href="#" class="footer__link">Software Solutions</a></li>
+              </ul>
+            </div>
+
+            <div class="footer__group">
+              <h3 class="footer__title">Resources</h3>
+              <ul class="footer__list">
+                <li><a href="./blog.html" class="footer__link">Blog</a></li>
+                <li><a href="#" class="footer__link">Case Studies</a></li>
+                <li><a href="#" class="footer__link">Guides</a></li>
+                <li><a href="#" class="footer__link">Events</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer__bottom">
+          <p class="footer__copy">&copy; 2025 NextGen. All rights reserved.</p>
+
+          <div class="footer__terms">
+            <a href="#" class="footer__terms-link">Privacy Policy</a>
+            <a href="#" class="footer__terms-link">Terms of Service</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!--==================== End of Footer ====================-->
+
+    <!--==================== Success Modal ====================-->
+    <div class="modal" id="success-modal">
+      <div class="modal__content">
+        <div class="modal__icon success">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+          </svg>
+        </div>
+        <h3 class="modal__title">Blog Post Published!</h3>
+        <p class="modal__text">
+          Your blog post has been successfully published.
+        </p>
+        <div class="modal__actions">
+          <a href="./blog.html" class="button button__outline">View Blog</a>
+          <button class="button button__primary modal-close">
+            Create Another
+          </button>
+        </div>
+      </div>
+    </div>
+    <!--==================== End of Success Modal ====================-->
+
+    <!--==================== Rich Text Editor ====================-->
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+    <!--==================== End of Rich Text Editor ====================-->
+
+    <!--==================== HubSpot Script ====================-->
+    <script
+      charset="utf-8"
+      type="text/javascript"
+      src="//js.hsforms.net/forms/embed/v2.js"
+    ></script>
+    <!--==================== End of HubSpot Script ====================-->
+
+    <!--==================== ScrollReveal ====================-->
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <!--==================== End of ScrollReveal ====================-->
+
+    <!--==================== Main JS ====================-->
+    <script src="./assets/js/main.js"></script>
+    <script src="./assets/js/create-blog.js"></script>
+    <!--==================== End of Main JS ====================-->
+  </body>
+</html>
