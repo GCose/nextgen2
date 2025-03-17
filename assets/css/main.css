@@ -1295,6 +1295,10 @@ img {
         min-height: 100vh;
     }
 
+    .video__wrapper {
+        margin-top: 3rem;
+    }
+
     .narrative__container {
         padding: 0 0.8rem;
     }
