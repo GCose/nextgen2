@@ -71,9 +71,9 @@
 
 .blog-create__tabs {
     display: flex;
-    border-bottom: 1px solid var(--border-color);
     overflow-x: auto;
     scrollbar-width: none;
+    border-bottom: 1px solid var(--border-color);
     -ms-overflow-style: none;
 }
 
@@ -408,19 +408,19 @@
  * MODAL STYLES
  ================*/
 .modal {
-    position: fixed;
     top: 0;
     left: 0;
+    opacity: 0;
     width: 100%;
     height: 100%;
     display: flex;
+    position: fixed;
+    z-index: 10000000;
+    visibility: hidden;
     align-items: center;
     justify-content: center;
-    background: rgba(5, 9, 18, 0.8);
-    z-index: 1000;
-    opacity: 0;
-    visibility: hidden;
     transition: all 0.3s ease;
+    background: rgba(5, 9, 18, 0.8);
 }
 
 .modal.active {

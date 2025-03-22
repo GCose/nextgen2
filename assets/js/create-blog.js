@@ -581,6 +581,13 @@ function initFormSubmission() {
 
     if (!form || !publishBtn || !saveDraftBtn || !successModal || !modalCloseBtn) return;
 
+    // Explicitly prevent the form from submitting naturally
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        console.log('Default form submission prevented');
+        return false;
+    });
+
     // Save draft button handler
     saveDraftBtn.addEventListener('click', () => {
         // Save content to localStorage as a draft
@@ -588,8 +595,13 @@ function initFormSubmission() {
         alert('Your blog post has been saved as a draft');
     });
 
-    // Publish button click handler (instead of form submit)
+    // Change publish button to type="button" in JavaScript as a failsafe
+    publishBtn.type = 'button';
+
+    // Publish button click handler
     publishBtn.addEventListener('click', async () => {
+        console.log('Publish button clicked');
+
         // Validate all tabs before submission
         if (!validateAllTabs()) return;
 
@@ -600,21 +612,59 @@ function initFormSubmission() {
         formData.append('blog-content', quill.root.innerHTML);
 
         try {
+            // Disable the button to prevent multiple clicks
+            publishBtn.disabled = true;
+            publishBtn.textContent = 'Publishing...';
+
+            console.log('Starting simulated submission...');
+
             // Simulate submission (in production, this would be an actual API call to HubSpot)
             await simulateHubSpotSubmission(formData);
 
-            // Show success modal
+            console.log('Submission complete, showing modal');
+
+            // Force the modal to display using multiple methods
             successModal.classList.add('active');
+            successModal.style.display = 'flex';
+            successModal.style.opacity = '1';
+            successModal.style.visibility = 'visible';
+
+            // Log to verify the modal state
+            console.log('Modal active state:', successModal.classList.contains('active'));
+            console.log('Modal display state:', window.getComputedStyle(successModal).display);
+            console.log('Modal visibility state:', window.getComputedStyle(successModal).visibility);
+
+            // Re-enable button
+            publishBtn.disabled = false;
+            publishBtn.textContent = 'Publish Post';
         } catch (error) {
             alert('There was an error publishing your blog post. Please try again.');
             console.error('Submission error:', error);
+
+            // Re-enable button on error too
+            publishBtn.disabled = false;
+            publishBtn.textContent = 'Publish Post';
         }
     });
 
     // Close modal button handler
     modalCloseBtn.addEventListener('click', () => {
+        console.log('Modal close button clicked');
+
+        // Hide modal using multiple methods
         successModal.classList.remove('active');
-        resetForm();
+        successModal.style.opacity = '0';
+        successModal.style.visibility = 'hidden';
+
+        // Reset form after a small delay to ensure modal transitions out properly
+        setTimeout(resetForm, 300);
+    });
+
+    // Click outside modal to close
+    successModal.addEventListener('click', (e) => {
+        if (e.target === successModal) {
+            modalCloseBtn.click();
+        }
     });
 
     // Helper functions
@@ -691,6 +741,7 @@ function initFormSubmission() {
         // This is where you would normally make an API call to HubSpot
         // For this demo, we'll simulate a successful submission
         return new Promise((resolve) => {
+            console.log('Processing submission...');
             setTimeout(() => {
                 console.log('Form data that would be sent to HubSpot:', Object.fromEntries(formData));
                 resolve({ success: true });
